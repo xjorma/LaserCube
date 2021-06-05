@@ -42,6 +42,10 @@ public:
         sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
         if (sock == INVALID_SOCKET)
             throw std::system_error(WSAGetLastError(), std::system_category(), "Error opening socket");
+        u_long iMode = 1;
+        int iResult = ioctlsocket(sock, FIONBIO, &iMode);
+        if (iResult != NO_ERROR)
+            throw std::system_error(WSAGetLastError(), std::system_category(), "Cannot set socket to non-blocking");
     }
     ~UDPSocket()
     {
@@ -69,11 +73,19 @@ public:
         sockaddr_in from;
         int size = sizeof(from);
         int ret = recvfrom(sock, buffer, len, flags, reinterpret_cast<SOCKADDR*>(&from), &size);
-        if (ret < 0)
+        if (ret < -1)
+        {
             throw std::system_error(WSAGetLastError(), std::system_category(), "recvfrom failed");
-
-        // make the buffer zero terminated
-        buffer[ret] = 0;
+        }
+        else if (ret == -1)
+        {
+            return ret;
+        }
+        else
+        {
+            // make the buffer zero terminated
+            buffer[ret] = 0;
+        }
         return ret;
     }
     void Bind(unsigned short port)

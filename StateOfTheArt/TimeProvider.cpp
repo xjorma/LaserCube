@@ -58,7 +58,10 @@ double OscTimeProvider::GetTime()
 {
     std::array<char, 1024> buffer;
     int size = socket.RecvFrom(buffer.data(), (int)buffer.size());
-    handlePacket(OSCPP::Server::Packet(buffer.data(), size));
+    if (size >= 0)
+    {
+        handlePacket(OSCPP::Server::Packet(buffer.data(), size));
+    }
     return fTime;
 }
 

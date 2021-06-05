@@ -14,24 +14,52 @@ double ClockTimeProvider::GetTime()
     return elapsed_seconds.count();
 }
 
-
 OscTimeProvider::OscTimeProvider(int port) : fTime(0.0f)
 {
-    UdpListeningReceiveSocket s( IpEndpointName(IpEndpointName::ANY_ADDRESS, port), &listener);
+    socket.Bind(port);
+}
+
+void OscTimeProvider::handlePacket(const OSCPP::Server::Packet& packet)
+{
+    if (packet.isBundle()) {
+        // Convert to bundle
+        OSCPP::Server::Bundle bundle(packet);
+        // Get packet stream
+        OSCPP::Server::PacketStream packets(bundle.packets());
+
+        // Iterate over all the packets and call handlePacket recursively.
+        // Cuidado: Might lead to stack overflow!
+        while (!packets.atEnd()) {
+            handlePacket(packets.next());
+        }
+    }
+    else {
+        // Convert to message
+        OSCPP::Server::Message msg(packet);
+
+        // Get argument stream
+        OSCPP::Server::ArgStream args(msg.args());
+
+        // Directly compare message address to string with operator==.
+        // For handling larger address spaces you could use e.g. a
+        // dispatch table based on std::unordered_map.
+        if (msg == "/Time") {
+            fTime = args.float32();
+        }
+        else 
+        {
+            // Simply print unknown messages
+            // std::cout << "Unknown message: " << msg.address() << std::endl;
+        }
+    }
 }
 
 double OscTimeProvider::GetTime()
 {
+    std::array<char, 1024> buffer;
+    int size = socket.RecvFrom(buffer.data(), (int)buffer.size());
+    handlePacket(OSCPP::Server::Packet(buffer.data(), size));
     return fTime;
 }
 
-void OscReceive::ProcessMessage(const osc::ReceivedMessage& m, const IpEndpointName& remoteEndpoint)
-{
-    osc::ReceivedMessageArgumentStream args = m.ArgumentStream();
-    osc::ReceivedMessage::const_iterator arg = m.ArgumentsBegin();
-    if (strcmp(m.AddressPattern(), "/time") == 0)
-    {
-        float fTime;
-        args >> fTime >> osc::EndMessage;
-    }
-}
+

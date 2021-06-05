@@ -72,19 +72,19 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)OscPack\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\SharedLibraries\oscpp;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)OscPack\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\SharedLibraries\oscpp;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)OscPack\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\SharedLibraries\oscpp;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)OscPack\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\SharedLibraries\oscpp;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -191,13 +191,6 @@
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="OscPack\ip\IpEndpointName.cpp" />
-    <ClCompile Include="OscPack\ip\win32\NetworkingUtils.cpp" />
-    <ClCompile Include="OscPack\ip\win32\UdpSocket.cpp" />
-    <ClCompile Include="OscPack\osc\OscOutboundPacketStream.cpp" />
-    <ClCompile Include="OscPack\osc\OscPrintReceivedElements.cpp" />
-    <ClCompile Include="OscPack\osc\OscReceivedElements.cpp" />
-    <ClCompile Include="OscPack\osc\OscTypes.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -212,19 +205,6 @@
   <ItemGroup>
     <ClInclude Include="Choreography.h" />
     <ClInclude Include="TimeProvider.h" />
-    <ClInclude Include="OscPack\ip\IpEndpointName.h" />
-    <ClInclude Include="OscPack\ip\NetworkingUtils.h" />
-    <ClInclude Include="OscPack\ip\PacketListener.h" />
-    <ClInclude Include="OscPack\ip\TimerListener.h" />
-    <ClInclude Include="OscPack\ip\UdpSocket.h" />
-    <ClInclude Include="OscPack\osc\MessageMappingOscPacketListener.h" />
-    <ClInclude Include="OscPack\osc\OscException.h" />
-    <ClInclude Include="OscPack\osc\OscHostEndianness.h" />
-    <ClInclude Include="OscPack\osc\OscOutboundPacketStream.h" />
-    <ClInclude Include="OscPack\osc\OscPacketListener.h" />
-    <ClInclude Include="OscPack\osc\OscPrintReceivedElements.h" />
-    <ClInclude Include="OscPack\osc\OscReceivedElements.h" />
-    <ClInclude Include="OscPack\osc\OscTypes.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="VectorAnim.h" />
   </ItemGroup>

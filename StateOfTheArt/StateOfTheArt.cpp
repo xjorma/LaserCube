@@ -61,7 +61,7 @@ int main(int argc, char** argv)
     bool osc = true;
     if (osc)
     {
-        timeProvider = new OscTimeProvider(6666);
+        timeProvider = new OscTimeProvider(8666);
     }
     else
     {

@@ -72,21 +72,25 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)OscPack\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(SolutionDir)OscPack\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)OscPack\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(SolutionDir)OscPack\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -96,6 +100,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)\..\SharedLibraries\freeglut\lib\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <CustomBuildStep>
       <Command>xcopy /y $(SolutionDir)..\SharedLibraries\freeglut\bin\freeglut.dll $(OutDirFullPath).</Command>
@@ -111,7 +116,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -123,6 +128,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)\..\SharedLibraries\freeglut\lib\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <CustomBuildStep>
       <Command>xcopy /y $(SolutionDir)..\SharedLibraries\freeglut\bin\freeglut.dll $(OutDirFullPath).</Command>
@@ -136,7 +142,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -146,6 +152,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)\..\SharedLibraries\freeglut\lib\x64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <CustomBuildStep>
       <Command>xcopy /y $(SolutionDir)..\SharedLibraries\freeglut\bin\x64\freeglut.dll $(OutDirFullPath).</Command>
@@ -161,7 +168,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -173,6 +180,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)\..\SharedLibraries\freeglut\lib\x64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <CustomBuildStep>
       <Command>xcopy /y $(SolutionDir)..\SharedLibraries\freeglut\bin\x64\freeglut.dll $(OutDirFullPath).</Command>
@@ -183,6 +191,13 @@
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="OscPack\ip\IpEndpointName.cpp" />
+    <ClCompile Include="OscPack\ip\win32\NetworkingUtils.cpp" />
+    <ClCompile Include="OscPack\ip\win32\UdpSocket.cpp" />
+    <ClCompile Include="OscPack\osc\OscOutboundPacketStream.cpp" />
+    <ClCompile Include="OscPack\osc\OscPrintReceivedElements.cpp" />
+    <ClCompile Include="OscPack\osc\OscReceivedElements.cpp" />
+    <ClCompile Include="OscPack\osc\OscTypes.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -190,11 +205,26 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Choreography.cpp" />
+    <ClCompile Include="TimeProvider.cpp" />
     <ClCompile Include="StateOfTheArt.cpp" />
     <ClCompile Include="VectorAnim.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Choreography.h" />
+    <ClInclude Include="TimeProvider.h" />
+    <ClInclude Include="OscPack\ip\IpEndpointName.h" />
+    <ClInclude Include="OscPack\ip\NetworkingUtils.h" />
+    <ClInclude Include="OscPack\ip\PacketListener.h" />
+    <ClInclude Include="OscPack\ip\TimerListener.h" />
+    <ClInclude Include="OscPack\ip\UdpSocket.h" />
+    <ClInclude Include="OscPack\osc\MessageMappingOscPacketListener.h" />
+    <ClInclude Include="OscPack\osc\OscException.h" />
+    <ClInclude Include="OscPack\osc\OscHostEndianness.h" />
+    <ClInclude Include="OscPack\osc\OscOutboundPacketStream.h" />
+    <ClInclude Include="OscPack\osc\OscPacketListener.h" />
+    <ClInclude Include="OscPack\osc\OscPrintReceivedElements.h" />
+    <ClInclude Include="OscPack\osc\OscReceivedElements.h" />
+    <ClInclude Include="OscPack\osc\OscTypes.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="VectorAnim.h" />
   </ItemGroup>

@@ -1,11 +1,12 @@
 #include "pch.h"
 #include "VectorAnim.h"
 #include "Choreography.h"
+#include "TimeProvider.h"
 
 //VectorAnim *animTest;
 Choreography* choreography;
 
-std::chrono::high_resolution_clock::time_point startTime;
+TimeProvider *timeProvider;
 
 void reshape(int w, int h)
 {
@@ -17,9 +18,7 @@ void reshape(int w, int h)
 
 void display(void)
 {
-    std::chrono::high_resolution_clock::time_point currentTime = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> elapsed_seconds = currentTime - startTime;
-    double time = elapsed_seconds.count();
+    double time = timeProvider->GetTime();
     //double curAnimTime = mod(time, animTest->duration());
     glClear(GL_COLOR_BUFFER_BIT);
     glBegin(GL_LINES);
@@ -59,8 +58,17 @@ int main(int argc, char** argv)
     glutCreateWindow("single triangle");
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
-    startTime = std::chrono::high_resolution_clock::now();
+    bool osc = true;
+    if (osc)
+    {
+        timeProvider = new OscTimeProvider(6666);
+    }
+    else
+    {
+        timeProvider = new ClockTimeProvider();
+    }
     glutMainLoop();
     delete choreography;
+    delete timeProvider;
     return 0;
 }

@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="OscPack">
+      <UniqueIdentifier>{5734b445-e60f-4890-ba9b-5b4b668e3b4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OscPack\Ip">
+      <UniqueIdentifier>{a6b07233-f4ee-4806-a1c5-95cd4ad126c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OscPack\Osc">
+      <UniqueIdentifier>{82a328f1-2cf7-43cc-ae78-f6600cd14bb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OscPack\Ip\Win32">
+      <UniqueIdentifier>{d9c257fe-feaa-45a2-8581-c2352458f59e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StateOfTheArt.cpp">
@@ -27,6 +39,30 @@
     <ClCompile Include="Choreography.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="OscPack\ip\win32\NetworkingUtils.cpp">
+      <Filter>OscPack\Ip\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="OscPack\ip\win32\UdpSocket.cpp">
+      <Filter>OscPack\Ip\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="OscPack\ip\IpEndpointName.cpp">
+      <Filter>OscPack\Ip</Filter>
+    </ClCompile>
+    <ClCompile Include="OscPack\osc\OscOutboundPacketStream.cpp">
+      <Filter>OscPack\Osc</Filter>
+    </ClCompile>
+    <ClCompile Include="OscPack\osc\OscPrintReceivedElements.cpp">
+      <Filter>OscPack\Osc</Filter>
+    </ClCompile>
+    <ClCompile Include="OscPack\osc\OscReceivedElements.cpp">
+      <Filter>OscPack\Osc</Filter>
+    </ClCompile>
+    <ClCompile Include="OscPack\osc\OscTypes.cpp">
+      <Filter>OscPack\Osc</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeProvider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -36,6 +72,48 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Choreography.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OscPack\ip\IpEndpointName.h">
+      <Filter>OscPack\Ip</Filter>
+    </ClInclude>
+    <ClInclude Include="OscPack\ip\NetworkingUtils.h">
+      <Filter>OscPack\Ip</Filter>
+    </ClInclude>
+    <ClInclude Include="OscPack\ip\PacketListener.h">
+      <Filter>OscPack\Ip</Filter>
+    </ClInclude>
+    <ClInclude Include="OscPack\ip\TimerListener.h">
+      <Filter>OscPack\Ip</Filter>
+    </ClInclude>
+    <ClInclude Include="OscPack\ip\UdpSocket.h">
+      <Filter>OscPack\Ip</Filter>
+    </ClInclude>
+    <ClInclude Include="OscPack\osc\MessageMappingOscPacketListener.h">
+      <Filter>OscPack\Osc</Filter>
+    </ClInclude>
+    <ClInclude Include="OscPack\osc\OscException.h">
+      <Filter>OscPack\Osc</Filter>
+    </ClInclude>
+    <ClInclude Include="OscPack\osc\OscHostEndianness.h">
+      <Filter>OscPack\Osc</Filter>
+    </ClInclude>
+    <ClInclude Include="OscPack\osc\OscOutboundPacketStream.h">
+      <Filter>OscPack\Osc</Filter>
+    </ClInclude>
+    <ClInclude Include="OscPack\osc\OscPacketListener.h">
+      <Filter>OscPack\Osc</Filter>
+    </ClInclude>
+    <ClInclude Include="OscPack\osc\OscPrintReceivedElements.h">
+      <Filter>OscPack\Osc</Filter>
+    </ClInclude>
+    <ClInclude Include="OscPack\osc\OscReceivedElements.h">
+      <Filter>OscPack\Osc</Filter>
+    </ClInclude>
+    <ClInclude Include="OscPack\osc\OscTypes.h">
+      <Filter>OscPack\Osc</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeProvider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

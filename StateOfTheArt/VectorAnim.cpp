@@ -139,12 +139,12 @@ const std::vector<std::vector<vec2>> VectorAnim::getShapeFromTime(double time)
     {
         std::vector<std::vector<vec2>> curFrame;
         curFrame.reserve(frames[curFrameIdx].size());
-        for(int i = 0; i < frames[curFrameIdx].size(); ++i)
+        for(int i = 0; i < (int)frames[curFrameIdx].size(); ++i)
         {
             if(frames[curFrameIdx][i].size() == frames[curFrameIdx + 1][i].size())
             {
                 float maxDist = 0.0f;
-                for (int j = 0; j < frames[curFrameIdx][i].size(); j++)
+                for (int j = 0; j < (int)frames[curFrameIdx][i].size(); j++)
                 {
                     maxDist = max(maxDist, length(frames[curFrameIdx][i][j] - frames[curFrameIdx + 1][i][j]));
                 }
@@ -154,7 +154,7 @@ const std::vector<std::vector<vec2>> VectorAnim::getShapeFromTime(double time)
                     std::vector<vec2> curShape;
                     curFrame.reserve(frames[curFrameIdx][i].size());
 
-                    for (int j = 0; j < frames[curFrameIdx][i].size(); j++)
+                    for (int j = 0; j < (int)frames[curFrameIdx][i].size(); j++)
                     {
                         curShape.push_back(mix(frames[curFrameIdx][i][j], frames[curFrameIdx + 1][i][j], alpha));
                     }

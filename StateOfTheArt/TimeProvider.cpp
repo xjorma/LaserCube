@@ -57,9 +57,13 @@ void OscTimeProvider::handlePacket(const OSCPP::Server::Packet& packet)
 double OscTimeProvider::GetTime()
 {
     std::array<char, 1024> buffer;
-    int size = socket.RecvFrom(buffer.data(), (int)buffer.size());
-    if (size >= 0)
-    {
+    for(;;)
+    { 
+        int size = socket.RecvFrom(buffer.data(), (int)buffer.size());
+        if(size < 0)
+        {
+            break;          // if no more packet needs to be processed 
+        }
         handlePacket(OSCPP::Server::Packet(buffer.data(), size));
     }
     return fTime;

@@ -31,10 +31,13 @@ const std::vector<std::vector<vec2>> Choreography::GetShapeFromTime(double time)
     std::vector<std::vector<vec2>> shapes;
     for(const Entry& entry : EntryVector)
     {
-        double endTime = entry.time + (entry.endFrame - entry.startFrame + 1) * VectorAnim::frameDuration;
+        int delta = entry.endFrame - entry.startFrame;
+        int deltaSign = sign(delta);
+        int deltaAbs = abs(delta);
+        double endTime = entry.time + (deltaAbs + 1) * VectorAnim::frameDuration;
         if (time > entry.time && time < endTime)
         {
-            std::vector<std::vector<vec2>> AnimShapes = AnimVector[entry.animIdex].getShapeFromTime(time - entry.time + entry.startFrame * VectorAnim::frameDuration);
+            std::vector<std::vector<vec2>> AnimShapes = AnimVector[entry.animIdex].getShapeFromTime((time - entry.time) * deltaSign + entry.startFrame * VectorAnim::frameDuration);
             for (const std::vector<vec2>& shape : AnimShapes)
             {
                 shapes.push_back(shape);
@@ -91,7 +94,7 @@ Choreography::Choreography(const char* splitTablePath, const char* sequencePath,
             strRead = ReadWord(lineStream, '\'');
             if (strRead.compare(std::string("from")))
             {
-                printf("\'name\' expected\n");
+                printf("\'from\' expected\n");
             }
             StreamFind(lineStream, ' ');
             strRead = ReadWord(lineStream, ',');

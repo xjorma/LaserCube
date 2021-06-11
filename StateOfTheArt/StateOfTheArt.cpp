@@ -19,6 +19,18 @@ void reshape(int w, int h)
 void display(void)
 {
     double time = timeProvider->GetTime();
+
+    // Hackish Remap
+
+    if (time < 2000.0 / 60.0)
+    {
+        time -= 96.0 / 60.0;
+    }
+    else
+    {
+        time -= 574.0 / 60.0;
+    }
+
     //double curAnimTime = mod(time, animTest->duration());
     glClear(GL_COLOR_BUFFER_BIT);
     glBegin(GL_LINES);

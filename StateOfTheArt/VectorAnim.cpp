@@ -50,13 +50,16 @@ std::vector<vec2> Tween(int tween_from, int tween_to, int tween_t, int tween_cou
     {
         int point_from = int(floor(i * point_multiplier_from));
         int point_to = int(floor(i * point_multiplier_to));
-
-        int idx_from = tween_from_data + (point_from * 2);
-        int idx_to = tween_to_data + (point_to * 2);
-
-        float y = data[idx_from] + (amt * (data[idx_to] - data[idx_from]));
-        float x = data[idx_from + 1] + (amt * (data[idx_to + 1] - data[idx_from + 1]));
-        newShape.push_back(ConvertToLaserOSRange(vec2(x, y)));
+        float alpha_from = fract(i * point_multiplier_from);
+        float alpha_to = fract(i * point_multiplier_to);
+        int idx_from0 = tween_from_data + (point_from * 2);
+        int idx_to0 = tween_to_data + (point_to * 2);
+        int idx_from1 = tween_from_data + (((point_from + 1) % tween_from_length) * 2);
+        int idx_to1 = tween_to_data + (((point_to + 1) % tween_to_length) * 2);
+        vec2 v_from = vec2(mix((float)data[idx_from0 + 1], (float)data[idx_from1 + 1], alpha_from), mix((float)data[idx_from0], (float)data[idx_from1], alpha_from));
+        vec2 v_to = vec2(mix((float)data[idx_to0 + 1], (float)data[idx_to1 + 1], alpha_from), mix((float)data[idx_to0], (float)data[idx_to1], alpha_from));
+        vec2 v = mix(v_from, v_to, amt);
+        newShape.push_back(ConvertToLaserOSRange(v));
     }
     return std::move(newShape);
 }

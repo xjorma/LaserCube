@@ -9,6 +9,8 @@ public:
 	int animIdex;
 	int	startFrame;
 	int endFrame;
+	bool flipVertical;
+	bool flipHorizontal;
 };
 
 

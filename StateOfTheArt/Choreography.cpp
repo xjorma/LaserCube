@@ -38,8 +38,15 @@ const std::vector<std::vector<vec2>> Choreography::GetShapeFromTime(double time)
         if (time > entry.time && time < endTime)
         {
             std::vector<std::vector<vec2>> AnimShapes = AnimVector[entry.animIdex].getShapeFromTime((time - entry.time) * deltaSign + entry.startFrame * VectorAnim::frameDuration);
-            for (const std::vector<vec2>& shape : AnimShapes)
+            for (std::vector<vec2>& shape : AnimShapes)
             {
+                for (vec2& v : shape)
+                {
+                    if (entry.flipHorizontal)
+                        v.x = 4095.0f - v.x;
+                    if (entry.flipVertical)
+                        v.y = 4095.0f - v.y;
+                }
                 shapes.push_back(shape);
             }
         }
@@ -65,6 +72,8 @@ Choreography::Choreography(const char* splitTablePath, const char* sequencePath,
     if (sequenceFile.is_open())
     {
         std::string line;
+        bool flipVertical = false;
+        bool flipHorizontal = false;
         while (std::getline(sequenceFile, line))
         {
             std::stringstream lineStream(line);
@@ -75,8 +84,31 @@ Choreography::Choreography(const char* splitTablePath, const char* sequencePath,
             StreamFind(lineStream, '\'');
             std::string strRead;
             strRead = ReadWord(lineStream, '\'');
-            if(strRead.compare(std::string("anim")))
+            if (strRead.compare(std::string("anim")))
+            {
+                if (!strRead.compare(std::string("scene")))
+                {
+                    flipVertical = false;
+                    flipHorizontal = false;
+                }
+                else if (!strRead.compare(std::string("scene_options")))
+                {
+                    flipVertical = false;
+                    flipHorizontal = false;
+                    for (;;)
+                    {
+                        if (!StreamFind(lineStream, '\''))
+                            break;
+                        strRead = ReadWord(lineStream, '\'');
+                        if (!strRead.compare(std::string("flip_vertical")))
+                            flipVertical = true;
+                        if (!strRead.compare(std::string("flip_horizontal")))
+                            flipHorizontal = true;
+
+                    }
+                }
                 continue;
+            }
             StreamFind(lineStream, '{');
             StreamFind(lineStream, '\'');
 
@@ -116,6 +148,8 @@ Choreography::Choreography(const char* splitTablePath, const char* sequencePath,
                 offset += splitTable[animNameStr.c_str()][i];
             entry.startFrame = from + offset;
             entry.endFrame = to + offset;
+            entry.flipHorizontal = flipHorizontal;
+            entry.flipVertical = flipVertical;
             // Load anim if needed
             if (animMap.count(animNameStr))
             {

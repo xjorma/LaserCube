@@ -2,9 +2,12 @@
 #include "VectorAnim.h"
 #include "Choreography.h"
 #include "TimeProvider.h"
+#include "RemapTime.h"
 
 //VectorAnim *animTest;
 Choreography* choreography;
+RemapTime* remapTime;
+
 
 TimeProvider *timeProvider;
 
@@ -19,9 +22,9 @@ void reshape(int w, int h)
 void display(void)
 {
     double time = timeProvider->GetTime();
-
+    time = remapTime->Convert(time);
     // Hackish Remap
-
+/*
     if (time < 2000.0 / 60.0)
     {
         time -= 96.0 / 60.0;
@@ -30,6 +33,7 @@ void display(void)
     {
         time -= 574.0 / 60.0;
     }
+*/
 
     //double curAnimTime = mod(time, animTest->duration());
     glClear(GL_COLOR_BUFFER_BIT);
@@ -62,6 +66,7 @@ void display(void)
 int main(int argc, char** argv)
 {
     choreography = new Choreography("./data/split_map.json", "./data/Sequence.txt", "./data/");
+    remapTime = new RemapTime("./data/remap.txt");
     //animTest = new VectorAnim("./data/script0cbd82.json", true);
 
     glutInit(&argc, argv);
@@ -82,5 +87,6 @@ int main(int argc, char** argv)
     glutMainLoop();
     delete choreography;
     delete timeProvider;
+    delete remapTime;
     return 0;
 }

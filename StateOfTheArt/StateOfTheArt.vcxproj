@@ -204,6 +204,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Choreography.h" />
+    <ClInclude Include="RemapTime.h" />
     <ClInclude Include="TimeProvider.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="VectorAnim.h" />

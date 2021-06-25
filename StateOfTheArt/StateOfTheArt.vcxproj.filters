@@ -44,5 +44,8 @@
     <ClInclude Include="TimeProvider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="RemapTime.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

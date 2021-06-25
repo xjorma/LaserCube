@@ -198,12 +198,16 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Choreography.cpp" />
+    <ClCompile Include="Boolean.cpp" />
+    <ClCompile Include="CircleEffect.cpp" />
     <ClCompile Include="TimeProvider.cpp" />
     <ClCompile Include="StateOfTheArt.cpp" />
     <ClCompile Include="VectorAnim.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Choreography.h" />
+    <ClInclude Include="boolean.h" />
+    <ClInclude Include="Effects.h" />
     <ClInclude Include="RemapTime.h" />
     <ClInclude Include="TimeProvider.h" />
     <ClInclude Include="pch.h" />

@@ -12,6 +12,7 @@ using json = nlohmann::json;
 #include <fstream>
 #include <sstream> 
 #include <chrono>
+#include <limits>
 
 // GLM
 //#define GLM_FORCE_MESSAGES

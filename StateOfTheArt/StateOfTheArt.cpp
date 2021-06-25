@@ -3,6 +3,7 @@
 #include "Choreography.h"
 #include "TimeProvider.h"
 #include "RemapTime.h"
+#include "effects.h"
 
 //VectorAnim *animTest;
 Choreography* choreography;
@@ -23,39 +24,26 @@ void display(void)
 {
     double time = timeProvider->GetTime();
     time = remapTime->Convert(time);
-    // Hackish Remap
-/*
-    if (time < 2000.0 / 60.0)
-    {
-        time -= 96.0 / 60.0;
-    }
-    else
-    {
-        time -= 574.0 / 60.0;
-    }
-*/
 
-    //double curAnimTime = mod(time, animTest->duration());
     glClear(GL_COLOR_BUFFER_BIT);
     glBegin(GL_LINES);
     //const std::vector<std::vector<vec2>> &frame = animTest->getShapeFromTime(curAnimTime);
     const std::vector<std::vector<vec2>> &frame = choreography->GetShapeFromTime(time);
-    for (const std::vector<vec2>& shape : frame)
+
+    CircleEffect myEffect(1024.0f, vec3(0, 0, 1), vec3(0, 1, 0));
+    std::vector<std::vector<Vertex>> vertices = myEffect.Apply(frame);
+
+    for (const std::vector<Vertex>& shape : vertices)
     {
         if (shape.size() <= 1)
             continue;
         for (int i = 0; i < (int)shape.size() - 1; i++)
         {
-            glColor3f(1.0, 1.0, 1.0);
-            glVertex2f(shape[i].x, shape[i].y);
-            glColor3f(1.0, 1.0, 1.0);
-            glVertex2f(shape[i + 1].x, shape[i + 1].y);
+            glColor3f(shape[i].color.r, shape[i].color.g, shape[i].color.b);
+            glVertex2f(shape[i].pos.x, shape[i].pos.y);
+            glColor3f(shape[i + 1].color.r, shape[i + 1].color.g, shape[i + 1].color.b);
+            glVertex2f(shape[i + 1].pos.x, shape[i + 1].pos.y);
         }
-        
-        glColor3f(1.0, 1.0, 1.0);
-        glVertex2f(shape[shape.size() - 1].x, shape[shape.size() - 1].y);
-        glColor3f(1.0, 1.0, 1.0);
-        glVertex2f(shape[0].x, shape[0].y);
     }
     glEnd();
     glutSwapBuffers();

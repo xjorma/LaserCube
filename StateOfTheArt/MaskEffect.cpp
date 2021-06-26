@@ -21,7 +21,7 @@ inline std::vector<std::vector<vec2>> Scale(const std::vector<std::vector<vec2>>
 	return std::move(ret);
 }
 
-std::vector<std::vector<Vertex>> MaskEffect::Apply(const std::vector<std::vector<vec2>>& shapes)
+std::vector<std::vector<Vertex>> MaskEffect::Apply(const std::vector<std::vector<vec2>>& shapes, float time)
 {
 	std::vector<std::vector<vec2>> scaledShape = Scale(shapes, scale);
 	std::vector<std::vector<Vertex>> ret = Colorize({ mask }, maskColor);

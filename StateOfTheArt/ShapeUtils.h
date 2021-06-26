@@ -89,3 +89,20 @@ inline std::vector<std::vector<Vertex>> Colorize(const std::vector<std::vector<v
 	}
 	return std::move(ret);
 }
+
+inline std::vector<std::vector<Vertex>> Colorize(const std::vector<std::vector<vec2>>& shapes, std::function<vec3(vec2)> map)
+{
+	std::vector<std::vector<Vertex>> ret;
+	ret.reserve(shapes.size());
+	for (const std::vector<vec2>& shape : shapes)
+	{
+		std::vector<Vertex> vShape;
+		vShape.reserve(shape.size());
+		for (const vec2& p : shape)
+		{
+			vShape.emplace_back(p, map(p));
+		}
+		ret.push_back(std::move(vShape));
+	}
+	return std::move(ret);
+}

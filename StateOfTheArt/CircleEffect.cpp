@@ -16,7 +16,7 @@ std::vector<vec2> BuildCircleShape(float radius, int subdiv)
 }
 
 
-std::vector<std::vector<Vertex>> CircleEffect::Apply(const std::vector<std::vector<vec2>> &shapes)
+std::vector<std::vector<Vertex>> CircleEffect::Apply(const std::vector<std::vector<vec2>> &shapes, float time)
 {
 	std::vector<vec2> circleShape = BuildCircleShape(1024.0f, 32);
 	std::vector<std::vector<vec2>> circleShapes = { circleShape };

@@ -61,7 +61,8 @@ int main(int argc, char** argv)
         {7720, new ColorEffect(vec3(0,0,1))},
         //{33990, new CircleEffect(1024.0f, vec3(0,1,0), vec3(0,0,1))},
         //{33990, new GhostEffect(vec3(0,1,0), vec3(0,0,1), 4)},
-        {33990, new InnerCircleEffect(vec3(0,1,0), vec3(0,0,1), 16.f, 1000)},
+        //{33990, new InnerCircleEffect(vec3(0,1,0), vec3(0,0,1), 16.f, 1000)},
+        {33990, new PlasmaEffect(1000)},
         });
     //animTest = new VectorAnim("./data/script0cbd82.json", true);
 

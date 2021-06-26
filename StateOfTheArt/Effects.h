@@ -14,7 +14,7 @@ struct Vertex
 class Effect
 {
 public:
-	virtual std::vector<std::vector<Vertex>> Apply(const std::vector<std::vector<vec2>>& shape) = 0;
+	virtual std::vector<std::vector<Vertex>> Apply(const std::vector<std::vector<vec2>>& shape, float time) = 0;
 };
 
 class ColorEffect : public Effect
@@ -24,7 +24,7 @@ public:
 	ColorEffect(vec3 _shapeColor) : shapeColor(_shapeColor)
 	{
 	}
-	virtual std::vector<std::vector<Vertex>> Apply(const std::vector<std::vector<vec2>>& shape) override;
+	virtual std::vector<std::vector<Vertex>> Apply(const std::vector<std::vector<vec2>>& shape, float time) override;
 };
 
 
@@ -37,7 +37,7 @@ public:
 	CircleEffect(float _radius, vec3 _shapeColor, vec3 _circleColor) : radius(_radius), shapeColor(_shapeColor), circleColor(_circleColor)
 	{
 	}
-	virtual std::vector<std::vector<Vertex>> Apply(const std::vector<std::vector<vec2>> &shape) override;
+	virtual std::vector<std::vector<Vertex>> Apply(const std::vector<std::vector<vec2>> &shape, float time) override;
 };
 
 class MaskEffect : public Effect
@@ -50,7 +50,7 @@ public:
 	MaskEffect(const std::vector<vec2> &_mask, vec3 _shapeColor, vec3 _maskColor, float _scale) : mask(_mask), shapeColor(_shapeColor), maskColor(_maskColor), scale(_scale)
 	{
 	}
-	virtual std::vector<std::vector<Vertex>> Apply(const std::vector<std::vector<vec2>>& shape) override;
+	virtual std::vector<std::vector<Vertex>> Apply(const std::vector<std::vector<vec2>>& shape, float time) override;
 };
 
 class GhostEffect : public Effect
@@ -63,7 +63,7 @@ public:
 	GhostEffect(vec3 _shapeColor, vec3 _fadeColor, int _nbGhost) : shapeColor(_shapeColor), fadeColor(_fadeColor), nbGhost(_nbGhost)
 	{
 	}
-	virtual std::vector<std::vector<Vertex>> Apply(const std::vector<std::vector<vec2>>& shape) override;
+	virtual std::vector<std::vector<Vertex>> Apply(const std::vector<std::vector<vec2>>& shape, float time) override;
 };
 
 class InnerCircleEffect : public Effect
@@ -76,7 +76,17 @@ public:
 	InnerCircleEffect(vec3 _color0, vec3 _color1, float _period, int _nbPoints) : color0(_color0), color1(_color1), period(_period), nbPoints(_nbPoints)
 	{
 	}
-	virtual std::vector<std::vector<Vertex>> Apply(const std::vector<std::vector<vec2>>& shape) override;
+	virtual std::vector<std::vector<Vertex>> Apply(const std::vector<std::vector<vec2>>& shape, float time) override;
+};
+
+class PlasmaEffect : public Effect
+{
+	int nbPoints;
+public:
+	PlasmaEffect(int _nbPoints) : nbPoints(_nbPoints)
+	{
+	}
+	virtual std::vector<std::vector<Vertex>> Apply(const std::vector<std::vector<vec2>>& shape, float time) override;
 };
 
 class Sequencer
@@ -112,6 +122,6 @@ public:
 				curEffect = &entries[i];
 			}
 		}
-		return std::move(curEffect->effect->Apply(shape));
+		return std::move(curEffect->effect->Apply(shape, float(time)));
 	}
 };

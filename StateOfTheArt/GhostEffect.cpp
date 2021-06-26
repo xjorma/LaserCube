@@ -3,7 +3,7 @@
 #include "shapeutils.h"
 
 
-std::vector<std::vector<Vertex>> GhostEffect::Apply(const std::vector<std::vector<vec2>>& shapes)
+std::vector<std::vector<Vertex>> GhostEffect::Apply(const std::vector<std::vector<vec2>>& shapes, float time)
 {
 	std::vector<std::vector<Vertex>> ret;
 	trail.insert(trail.begin(), shapes);

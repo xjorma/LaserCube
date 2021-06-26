@@ -51,6 +51,9 @@
     <ClCompile Include="InnerCircleEffect.cpp">
       <Filter>Source Files\Effect</Filter>
     </ClCompile>
+    <ClCompile Include="PlasmaEffect.cpp">
+      <Filter>Source Files\Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">

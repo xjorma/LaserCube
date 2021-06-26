@@ -39,7 +39,7 @@ std::vector<std::vector<Vertex>> CircleEffect::Apply(const std::vector<std::vect
 	std::vector<std::vector<vec2>> circleShapes = { circleShape };
 	if (shapes.size())
 	{
-		circleShapes = boolean(circleShape, shapes[0], false);
+		circleShapes = boolean(circleShape, shapes[0], true);
 	}
 	std::vector<std::vector<Vertex>> circleVShapes = Colorize(circleShapes, circleColor);
 	std::vector<std::vector<Vertex>> vShapes = Colorize(shapes, shapeColor);

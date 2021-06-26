@@ -8,6 +8,7 @@
 //VectorAnim *animTest;
 Choreography* choreography;
 RemapTime* remapTime;
+Sequencer* sequencer;
 
 
 TimeProvider *timeProvider;
@@ -27,11 +28,9 @@ void display(void)
 
     glClear(GL_COLOR_BUFFER_BIT);
     glBegin(GL_LINES);
-    //const std::vector<std::vector<vec2>> &frame = animTest->getShapeFromTime(curAnimTime);
     const std::vector<std::vector<vec2>> &frame = choreography->GetShapeFromTime(time);
 
-    CircleEffect myEffect(1024.0f, vec3(0, 0, 1), vec3(0, 1, 0));
-    std::vector<std::vector<Vertex>> vertices = myEffect.Apply(frame);
+    std::vector<std::vector<Vertex>> vertices = sequencer->Tick(time, frame);
 
     for (const std::vector<Vertex>& shape : vertices)
     {
@@ -55,6 +54,9 @@ int main(int argc, char** argv)
 {
     choreography = new Choreography("./data/split_map.json", "./data/Sequence.txt", "./data/");
     remapTime = new RemapTime("./data/remap.txt");
+    sequencer = new Sequencer({
+        {0, new CircleEffect(1024.0f, vec3(0,1,0), vec3(0,0,1))}
+    });
     //animTest = new VectorAnim("./data/script0cbd82.json", true);
 
     glutInit(&argc, argv);
@@ -76,5 +78,6 @@ int main(int argc, char** argv)
     delete choreography;
     delete timeProvider;
     delete remapTime;
+    delete sequencer;
     return 0;
 }

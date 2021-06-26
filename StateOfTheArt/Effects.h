@@ -28,3 +28,42 @@ public:
 	}
 	virtual std::vector<std::vector<Vertex>> Apply(const std::vector<std::vector<vec2>> &shape) override;
 };
+
+
+
+class Sequencer
+{
+public:
+	struct SeqEntry
+	{
+		int	startTime;
+		Effect* effect;
+	};
+private:
+	std::vector<SeqEntry>	entries;
+public:
+	Sequencer(const std::vector<SeqEntry>& _entries) : entries(_entries)
+	{
+	}
+
+	~Sequencer()
+	{
+		for (SeqEntry& entry : entries)
+		{
+			delete entry.effect;
+		}
+	}
+
+	std::vector<std::vector<Vertex>> Tick(double time, const std::vector<std::vector<vec2>>& shape)
+	{
+		SeqEntry& curEffect = entries[0];
+		for (int i = 1; i < entries.size(); i++)
+		{
+			if (time >= double(entries[i].startTime) * 1000.0)
+			{
+				curEffect = entries[i];
+			}
+		}
+		return std::move(curEffect.effect->Apply(shape));
+	}
+};

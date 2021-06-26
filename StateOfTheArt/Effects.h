@@ -17,6 +17,17 @@ public:
 	virtual std::vector<std::vector<Vertex>> Apply(const std::vector<std::vector<vec2>>& shape) = 0;
 };
 
+class ColorEffect : public Effect
+{
+	vec3 shapeColor;
+public:
+	ColorEffect(vec3 _shapeColor) : shapeColor(_shapeColor)
+	{
+	}
+	virtual std::vector<std::vector<Vertex>> Apply(const std::vector<std::vector<vec2>>& shape) override;
+};
+
+
 class CircleEffect : public Effect
 {
 	float radius;
@@ -29,6 +40,18 @@ public:
 	virtual std::vector<std::vector<Vertex>> Apply(const std::vector<std::vector<vec2>> &shape) override;
 };
 
+class MaskEffect : public Effect
+{
+	vec3 shapeColor;
+	vec3 maskColor;
+	float scale;
+	std::vector<vec2> mask;
+public:
+	MaskEffect(const std::vector<vec2> &_mask, vec3 _shapeColor, vec3 _maskColor, float _scale) : mask(_mask), shapeColor(_shapeColor), maskColor(_maskColor), scale(_scale)
+	{
+	}
+	virtual std::vector<std::vector<Vertex>> Apply(const std::vector<std::vector<vec2>>& shape) override;
+};
 
 
 class Sequencer
@@ -56,14 +79,14 @@ public:
 
 	std::vector<std::vector<Vertex>> Tick(double time, const std::vector<std::vector<vec2>>& shape)
 	{
-		SeqEntry& curEffect = entries[0];
+		SeqEntry *curEffect = &entries[0];
 		for (int i = 1; i < entries.size(); i++)
 		{
-			if (time >= double(entries[i].startTime) * 1000.0)
+			if (time >= double(entries[i].startTime) / 1000.0)
 			{
-				curEffect = entries[i];
+				curEffect = &entries[i];
 			}
 		}
-		return std::move(curEffect.effect->Apply(shape));
+		return std::move(curEffect->effect->Apply(shape));
 	}
 };

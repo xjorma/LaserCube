@@ -11,13 +11,14 @@ vec2 ConvertToLaserOSRange(const vec2 &p)
 std::vector<vec2> MakeShape(const std::vector<int> &data, int idx, int length)
 {
     std::vector<vec2> poly;
-    poly.reserve(length);
+    poly.reserve(length + 1);
     for (int i = 0; i < length; ++i)
     {
         float x = float(data[idx + 1 + i * 2]);
         float y = float(data[idx + 0 + i * 2]);
         poly.push_back(ConvertToLaserOSRange(vec2(x,  y)));
     }
+    poly.push_back(poly[0]);
     return std::move(poly);
 }
 
@@ -40,7 +41,7 @@ std::vector<vec2> Tween(int tween_from, int tween_to, int tween_t, int tween_cou
     int tween_to_data = tween_to + 2;
 
     int points = max(tween_from_length, tween_to_length);
-    newShape.reserve(points);
+    newShape.reserve(points + 1);
 
     float point_multiplier_from = float(tween_from_length) / float(points);
     float point_multiplier_to = float(tween_to_length) / float(points);
@@ -61,6 +62,7 @@ std::vector<vec2> Tween(int tween_from, int tween_to, int tween_t, int tween_cou
         vec2 v = mix(v_from, v_to, amt);
         newShape.push_back(ConvertToLaserOSRange(v));
     }
+    newShape.push_back(newShape[0]);
     return std::move(newShape);
 }
 

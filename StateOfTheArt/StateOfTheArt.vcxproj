@@ -200,6 +200,8 @@
     <ClCompile Include="Choreography.cpp" />
     <ClCompile Include="Boolean.cpp" />
     <ClCompile Include="CircleEffect.cpp" />
+    <ClCompile Include="ColorEffect.cpp" />
+    <ClCompile Include="MaskEffect.cpp" />
     <ClCompile Include="TimeProvider.cpp" />
     <ClCompile Include="StateOfTheArt.cpp" />
     <ClCompile Include="VectorAnim.cpp" />
@@ -208,6 +210,7 @@
     <ClInclude Include="Choreography.h" />
     <ClInclude Include="boolean.h" />
     <ClInclude Include="Effects.h" />
+    <ClInclude Include="ShapeUtils.h" />
     <ClInclude Include="RemapTime.h" />
     <ClInclude Include="TimeProvider.h" />
     <ClInclude Include="pch.h" />

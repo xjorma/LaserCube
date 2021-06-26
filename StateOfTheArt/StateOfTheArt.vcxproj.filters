@@ -36,6 +36,12 @@
     <ClCompile Include="CircleEffect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ColorEffect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MaskEffect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -57,6 +63,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Effects.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ShapeUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

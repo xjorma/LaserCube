@@ -53,6 +53,20 @@ public:
 	virtual std::vector<std::vector<Vertex>> Apply(const std::vector<std::vector<vec2>>& shape) override;
 };
 
+class GhostEffect : public Effect
+{
+	vec3 shapeColor;
+	vec3 fadeColor;
+	int nbGhost;
+	std::vector<std::vector<std::vector<vec2>>> trail;
+public:
+	GhostEffect(vec3 _shapeColor, vec3 _fadeColor, int _nbGhost) : shapeColor(_shapeColor), fadeColor(_fadeColor), nbGhost(_nbGhost)
+	{
+	}
+	virtual std::vector<std::vector<Vertex>> Apply(const std::vector<std::vector<vec2>>& shape) override;
+};
+
+
 
 class Sequencer
 {

@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Effect">
+      <UniqueIdentifier>{eab0cbca-9dd6-4ec9-abb6-cc0e6c918fe5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StateOfTheArt.cpp">
@@ -34,13 +37,16 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CircleEffect.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Effect</Filter>
     </ClCompile>
     <ClCompile Include="ColorEffect.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Effect</Filter>
     </ClCompile>
     <ClCompile Include="MaskEffect.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="GhostEffect.cpp">
+      <Filter>Source Files\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

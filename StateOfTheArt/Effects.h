@@ -43,6 +43,20 @@ public:
 	virtual std::vector<std::vector<Vertex>> Apply(const std::vector<std::vector<vec2>> &shape, float time) override;
 };
 
+class LineEffect : public Effect
+{
+	int lines;
+	vec3 shapeColor;
+	vec3 circleColor;
+	AudioCapture* audioCapture;
+public:
+	LineEffect(int _lines, vec3 _shapeColor, vec3 _circleColor, AudioCapture* _audioCapture) : lines(_lines), shapeColor(_shapeColor), circleColor(_circleColor), audioCapture(_audioCapture)
+	{
+	}
+	virtual std::vector<std::vector<Vertex>> Apply(const std::vector<std::vector<vec2>>& shape, float time) override;
+};
+
+
 class MaskEffect : public Effect
 {
 	vec3 shapeColor;

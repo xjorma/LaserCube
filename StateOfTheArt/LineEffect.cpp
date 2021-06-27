@@ -20,7 +20,7 @@ std::vector<vec2> BuildLineShape(float height, int subdiv, AudioCapture* audioCa
 }
 
 
-std::vector<std::vector<Vertex>> LineEffect::Apply(const std::vector<std::vector<vec2>>& shapes, float time)
+std::vector<std::vector<Vertex>> LineEffect::Apply(const std::vector<std::vector<vec2>>& shapes, float iTime)
 {
 	std::vector<vec2> circleShape = BuildLineShape(2047.0f, 32, audioCapture);
 	std::vector<std::vector<vec2>> circleShapes = { circleShape };
@@ -28,6 +28,7 @@ std::vector<std::vector<Vertex>> LineEffect::Apply(const std::vector<std::vector
 	{
 		circleShapes = boolean(circleShape, shapes[0], false);
 	}
+	vec3 shapeColor = mix(shapeColor0, shapeColor1, sin(iTime * radians(360.0f) / freq) * 0.5f + 0.5f);
 	std::vector<std::vector<Vertex>> circleVShapes = Colorize(circleShapes, circleColor);
 	std::vector<std::vector<Vertex>> vShapes = Colorize(shapes, shapeColor);
 	std::vector<std::vector<Vertex>> vAllShape;

@@ -45,12 +45,13 @@ public:
 
 class LineEffect : public Effect
 {
-	int lines;
-	vec3 shapeColor;
+	float freq;
+	vec3 shapeColor0;
+	vec3 shapeColor1;
 	vec3 circleColor;
 	AudioCapture* audioCapture;
 public:
-	LineEffect(int _lines, vec3 _shapeColor, vec3 _circleColor, AudioCapture* _audioCapture) : lines(_lines), shapeColor(_shapeColor), circleColor(_circleColor), audioCapture(_audioCapture)
+	LineEffect(float _freq, vec3 _shapeColor0, vec3 _shapeColor1, vec3 _circleColor, AudioCapture* _audioCapture) : freq(_freq), shapeColor0(_shapeColor0), shapeColor1(_shapeColor1), circleColor(_circleColor), audioCapture(_audioCapture)
 	{
 	}
 	virtual std::vector<std::vector<Vertex>> Apply(const std::vector<std::vector<vec2>>& shape, float time) override;

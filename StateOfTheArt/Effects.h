@@ -120,6 +120,17 @@ public:
 	virtual std::vector<std::vector<Vertex>> Apply(const std::vector<std::vector<vec2>>& shape, float time) override;
 };
 
+class TextEffect : public Effect
+{
+	vec3 color;
+	std::string str;
+public:
+	TextEffect(const std::string &_str, vec3 _color) : str(_str), color(_color)
+	{
+	}
+	virtual std::vector<std::vector<Vertex>> Apply(const std::vector<std::vector<vec2>>& shape, float time) override;
+};
+
 class Sequencer
 {
 public:

@@ -208,6 +208,7 @@
     <ClCompile Include="GhostEffect.cpp" />
     <ClCompile Include="InnerCircleEffect.cpp" />
     <ClCompile Include="PlasmaEffect.cpp" />
+    <ClCompile Include="TextEffect.cpp" />
     <ClCompile Include="TimeProvider.cpp" />
     <ClCompile Include="StateOfTheArt.cpp" />
     <ClCompile Include="VectorAnim.cpp" />

@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "effects.h"
-#include "boolean.h"
 #include "shapeutils.h"
 #include "AudioCapture.h"
 

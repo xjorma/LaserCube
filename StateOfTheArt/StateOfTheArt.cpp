@@ -60,15 +60,23 @@ int main(int argc, char** argv)
     remapTime = new RemapTime("./data/remap.txt");
     std::vector<vec2> hand = choreography->GetShapeFromTime(double(2040 - 1) / 1000.0)[0];
     sequencer = new Sequencer({
-        {0, new ColorEffect(vec3(0,0,1))},
-        {2040, new MaskEffect(hand, vec3(0,1,0), vec3(0,0,1), 0.95f)},
-        {7720, new ColorEffect(vec3(0,0,1))},
+        {0, new ColorEffect(vec3(0,0,1))},                                                          // James Bond Begin
+        {2040, new MaskEffect(hand, vec3(0,1,0), vec3(0,0,1), 0.95f)},                              // Girl in hand
+        {7720, new ColorEffect(vec3(0,0,1))},                                                       // James Bond End
+        {19040, new TextEffect(std::string("HOLOSAPIENS"), vec3(1))},
+        {20090, new TextEffect(std::string("STATE"), vec3(1))},
+        {21140, new TextEffect(std::string("OF"), vec3(1))},
+        {22190, new TextEffect(std::string("LASER"), vec3(1))},
+
         {33990, new InnerCircleEffect(vec3(0,0,1), vec3(1,0,0), 64.f, 1000, -8.0f)},
-        {43430, new CircleEffect(1500.0f, vec3(0,1,0), vec3(0,0,1), audioCapture)},         // Text
+
+        {43430, new CircleEffect(1500.0f, vec3(0,1,0), vec3(0,0,1), audioCapture)},                  // Text
+
         {46830, new GhostEffect(vec3(0,1,0), vec3(0,0,1), 4)},
         {58030, new PlasmaEffect(1000)},
         {66670, new CircleEffect(1500.0f, vec3(0,1,0), vec3(0,0,1), audioCapture)},
-        {73670, new LineEffect(0.5f, vec3(0,1,0), vec3(0,0.25f,0), vec3(0,0,1), audioCapture)},                 // Text2
+
+        {73670, new LineEffect(0.5f, vec3(0,1,0), vec3(0,0.25f,0), vec3(0,0,1), audioCapture)},      // Text2
 
         {76670, new InnerCircleEffect(vec3(0,0,1), vec3(1,0,0), 64.f, 1000, -8.0f)},
         {77030, new InnerCircleEffect(vec3(1,1,0), vec3(0,1,1), 64.f, 1000, -8.0f)},
@@ -147,13 +155,8 @@ int main(int argc, char** argv)
         {216870, new InnerCircleEffect(vec3(1,1,0), vec3(0,1,1), 64.f, 1000, -8.0f)},
 
         {217630, new LineEffect(0.1f, vec3(1), vec3(0.25f), vec3(0,0,1), audioCapture)},
-        //{33990, new LineEffect(3, vec3(0,1,0), vec3(0,0,1), audioCapture)},
-        //{33990, new CircleEffect(1500.0f, vec3(0,1,0), vec3(0,0,1), audioCapture)},
-        //{33990, new GhostEffect(vec3(0,1,0), vec3(0,0,1), 4)},
-        //{33990, new InnerCircleEffect(vec3(0,0,1), vec3(1,0,0), 64.f, 1000, -8.0f)},
-        //{33990, new PlasmaEffect(1000)},
-        });
-    //animTest = new VectorAnim("./data/script0cbd82.json", true);
+
+     });
 
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);

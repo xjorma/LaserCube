@@ -72,7 +72,7 @@ std::vector<std::vector<vec2>> font =
 	{ P(0,0), P(8,0)}, // _
 };
 
-std::vector<std::vector<vec2>> DrawString(const std::string str)
+std::vector<std::vector<vec2>> DrawString(const std::string str, float scale)
 {
 	std::vector<std::vector<vec2>> ret;
 	std::vector<vec2> curShape;
@@ -94,7 +94,7 @@ std::vector<std::vector<vec2>> DrawString(const std::string str)
 				}
 				else
 				{
-					curShape.push_back(vec2(p.x, -p.y) * size + vec2(i * size, 0) + vec2(size * 0.5f, 2047));
+					curShape.push_back(((vec2(p.x, -p.y) * size + vec2(i * size, 0) + vec2(size * 0.5f, 2047)) - vec2(2047)) * scale + vec2(2047));
 				}
 			}
 			ret.push_back(curShape);
@@ -107,5 +107,5 @@ std::vector<std::vector<vec2>> DrawString(const std::string str)
 
 std::vector<std::vector<Vertex>> TextEffect::Apply(const std::vector<std::vector<vec2>>& shapes, float iTime)
 {
-	return std::move(Colorize(DrawString(str), color));
+	return std::move(Colorize(DrawString(str, scale), color));
 }

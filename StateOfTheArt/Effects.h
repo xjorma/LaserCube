@@ -123,9 +123,10 @@ public:
 class TextEffect : public Effect
 {
 	vec3 color;
+	float scale;
 	std::string str;
 public:
-	TextEffect(const std::string &_str, vec3 _color) : str(_str), color(_color)
+	TextEffect(const std::string &_str, vec3 _color, float _scale = 1.0f) : str(_str), color(_color), scale(_scale)
 	{
 	}
 	virtual std::vector<std::vector<Vertex>> Apply(const std::vector<std::vector<vec2>>& shape, float time) override;

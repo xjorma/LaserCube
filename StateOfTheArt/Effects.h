@@ -69,11 +69,12 @@ public:
 class InnerCircleEffect : public Effect
 {
 	float period;
+	float speed;
 	int nbPoints;
 	vec3 color0;
 	vec3 color1;
 public:
-	InnerCircleEffect(vec3 _color0, vec3 _color1, float _period, int _nbPoints) : color0(_color0), color1(_color1), period(_period), nbPoints(_nbPoints)
+	InnerCircleEffect(vec3 _color0, vec3 _color1, float _period, int _nbPoints, float _speed) : color0(_color0), color1(_color1), period(_period), nbPoints(_nbPoints), speed(_speed)
 	{
 	}
 	virtual std::vector<std::vector<Vertex>> Apply(const std::vector<std::vector<vec2>>& shape, float time) override;

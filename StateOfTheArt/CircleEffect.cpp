@@ -18,11 +18,11 @@ std::vector<vec2> BuildCircleShape(float radius, int subdiv)
 
 std::vector<std::vector<Vertex>> CircleEffect::Apply(const std::vector<std::vector<vec2>> &shapes, float time)
 {
-	std::vector<vec2> circleShape = BuildCircleShape(1024.0f, 32);
+	std::vector<vec2> circleShape = BuildCircleShape(radius, 32);
 	std::vector<std::vector<vec2>> circleShapes = { circleShape };
 	if (shapes.size())
 	{
-		circleShapes = boolean(circleShape, shapes[0], true);
+		circleShapes = boolean(circleShape, shapes[0], false);
 	}
 	std::vector<std::vector<Vertex>> circleVShapes = Colorize(circleShapes, circleColor);
 	std::vector<std::vector<Vertex>> vShapes = Colorize(shapes, shapeColor);

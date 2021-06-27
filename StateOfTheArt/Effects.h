@@ -2,6 +2,8 @@
 
 #include "pch.h"
 
+class AudioCapture;
+
 struct Vertex
 {
 	vec2 pos;
@@ -32,9 +34,10 @@ class CircleEffect : public Effect
 {
 	float radius;
 	vec3 shapeColor;
-	vec3 circleColor; 
+	vec3 circleColor;
+	AudioCapture *audioCapture;
 public:
-	CircleEffect(float _radius, vec3 _shapeColor, vec3 _circleColor) : radius(_radius), shapeColor(_shapeColor), circleColor(_circleColor)
+	CircleEffect(float _radius, vec3 _shapeColor, vec3 _circleColor, AudioCapture *_audioCapture) : radius(_radius), shapeColor(_shapeColor), circleColor(_circleColor), audioCapture(_audioCapture)
 	{
 	}
 	virtual std::vector<std::vector<Vertex>> Apply(const std::vector<std::vector<vec2>> &shape, float time) override;

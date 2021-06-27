@@ -4,11 +4,13 @@
 #include "TimeProvider.h"
 #include "RemapTime.h"
 #include "effects.h"
+#include "AudioCapture.h"
 
 //VectorAnim *animTest;
 Choreography* choreography;
 RemapTime* remapTime;
 Sequencer* sequencer;
+AudioCapture *audioCapture;
 
 
 TimeProvider *timeProvider;
@@ -52,6 +54,7 @@ void display(void)
 
 int main(int argc, char** argv)
 {
+    audioCapture = new AudioCapture();
     choreography = new Choreography("./data/split_map.json", "./data/Sequence.txt", "./data/");
     remapTime = new RemapTime("./data/remap.txt");
     std::vector<vec2> hand = choreography->GetShapeFromTime(double(2040 - 1) / 1000.0)[0];
@@ -59,7 +62,7 @@ int main(int argc, char** argv)
         {0, new ColorEffect(vec3(0,0,1))},
         {2040, new MaskEffect(hand, vec3(0,1,0), vec3(0,0,1), 0.95f)},
         {7720, new ColorEffect(vec3(0,0,1))},
-        {33990, new CircleEffect(1500.0f, vec3(0,1,0), vec3(0,0,1))},
+        {33990, new CircleEffect(1500.0f, vec3(0,1,0), vec3(0,0,1), audioCapture)},
         //{33990, new GhostEffect(vec3(0,1,0), vec3(0,0,1), 4)},
         //{33990, new InnerCircleEffect(vec3(0,0,1), vec3(1,0,0), 64.f, 1000, -8.0f)},
         //{33990, new PlasmaEffect(1000)},
@@ -86,5 +89,6 @@ int main(int argc, char** argv)
     delete timeProvider;
     delete remapTime;
     delete sequencer;
+    delete audioCapture;
     return 0;
 }

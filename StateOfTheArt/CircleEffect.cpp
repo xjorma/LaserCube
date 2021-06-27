@@ -2,15 +2,21 @@
 #include "effects.h"
 #include "boolean.h"
 #include "shapeutils.h"
+#include "AudioCapture.h"
 
-std::vector<vec2> BuildCircleShape(float radius, int subdiv)
+std::vector<vec2> BuildCircleShape(float radius, int subdiv, AudioCapture *audioCapture)
 {
 	std::vector<vec2> ret;
 	ret.reserve(subdiv + 1);
+	std::vector<vec2> sample = audioCapture->GetSamples();
 	for (int i = 0; i < subdiv + 1; i++)
 	{
 		float a = radians(360.f) * float(i) / float(subdiv);
-		ret.emplace_back(cos(a) * radius + 2047.0f, sin(a) * radius + 2047.0f);
+		vec2 v = vec2(cos(a), sin(a));
+		int idx = (int)floor((v.x * 0.5f + 0.5f) * float(sample.size() - 1));
+		float s = dot(sample[idx], vec2(1));
+		float r = mix(radius, radius * 1.3f, s);
+		ret.push_back(v * r + 2047.0f);
 	}
 	return std::move(ret);
 }
@@ -18,7 +24,7 @@ std::vector<vec2> BuildCircleShape(float radius, int subdiv)
 
 std::vector<std::vector<Vertex>> CircleEffect::Apply(const std::vector<std::vector<vec2>> &shapes, float time)
 {
-	std::vector<vec2> circleShape = BuildCircleShape(radius, 32);
+	std::vector<vec2> circleShape = BuildCircleShape(radius, 64, audioCapture);
 	std::vector<std::vector<vec2>> circleShapes = { circleShape };
 	if (shapes.size())
 	{

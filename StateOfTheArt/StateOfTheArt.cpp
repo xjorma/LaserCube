@@ -29,6 +29,7 @@ void display(void)
     time = remapTime->Convert(time);
 
     glClear(GL_COLOR_BUFFER_BIT);
+    glBlendFunc(GL_ONE, GL_ONE);
     glBegin(GL_LINES);
     const std::vector<std::vector<vec2>> &frame = choreography->GetShapeFromTime(time);
 
@@ -62,7 +63,21 @@ int main(int argc, char** argv)
         {0, new ColorEffect(vec3(0,0,1))},
         {2040, new MaskEffect(hand, vec3(0,1,0), vec3(0,0,1), 0.95f)},
         {7720, new ColorEffect(vec3(0,0,1))},
-        {33990, new DisturbEffect(200.0f, vec3(0,1,0), audioCapture)},
+        {33990, new InnerCircleEffect(vec3(0,0,1), vec3(1,0,0), 64.f, 1000, -8.0f)},
+        {43430, new CircleEffect(1500.0f, vec3(0,1,0), vec3(0,0,1), audioCapture)},         // Text
+        {46830, new GhostEffect(vec3(0,1,0), vec3(0,0,1), 4)},
+        {58030, new PlasmaEffect(1000)},
+        {66670, new CircleEffect(1500.0f, vec3(0,1,0), vec3(0,0,1), audioCapture)},
+        {73670, new LineEffect(3, vec3(0,1,0), vec3(0,0,1), audioCapture)},                 // Text2
+        {76670, new InnerCircleEffect(vec3(0,0,1), vec3(1,0,0), 64.f, 1000, -8.0f)},
+        {91510, new GhostEffect(vec3(0,1,0), vec3(0,0,1), 4)},                              // Jump
+        {91510, new GhostEffect(vec3(0,1,0), vec3(0,0,1), 4)},                              // Jump
+        {105550, new DisturbEffect(200.0f, vec3(0,1,0), audioCapture)},                     // Glichy
+        {138070, new PlasmaEffect(1000)},                                                   // Tubuloc
+        {154750, new GhostEffect(vec3(0,1,0), vec3(0,0.3f,0), 4)},
+        {175590, new PlasmaEffect(1000)},                                                   // outline
+        {203310, new InnerCircleEffect(vec3(0,0,1), vec3(1,0,0), 64.f, 1000, -8.0f)},
+        {217630, new LineEffect(3, vec3(0,1,0), vec3(0,0,1), audioCapture)},
         //{33990, new LineEffect(3, vec3(0,1,0), vec3(0,0,1), audioCapture)},
         //{33990, new CircleEffect(1500.0f, vec3(0,1,0), vec3(0,0,1), audioCapture)},
         //{33990, new GhostEffect(vec3(0,1,0), vec3(0,0,1), 4)},

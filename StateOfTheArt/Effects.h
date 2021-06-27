@@ -132,6 +132,19 @@ public:
 	virtual std::vector<std::vector<Vertex>> Apply(const std::vector<std::vector<vec2>>& shape, float time) override;
 };
 
+class TunnelEffect : public Effect
+{
+	vec3 color;
+	float dist;
+	float radius;
+	float helicoidal;
+public:
+	TunnelEffect(vec3 _color, float _dist, float _radius, float _helicoidal) : color(_color), dist(_dist), radius(_radius), helicoidal(_helicoidal)
+	{
+	}
+	virtual std::vector<std::vector<Vertex>> Apply(const std::vector<std::vector<vec2>>& shape, float time) override;
+};
+
 class Sequencer
 {
 public:

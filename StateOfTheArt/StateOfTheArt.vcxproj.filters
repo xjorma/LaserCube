@@ -66,6 +66,9 @@
     <ClCompile Include="TextEffect.cpp">
       <Filter>Source Files\Effect</Filter>
     </ClCompile>
+    <ClCompile Include="TunnelEffect.cpp">
+      <Filter>Source Files\Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">

@@ -69,6 +69,8 @@ int main(int argc, char** argv)
         {19570 + 900 * 2, new TextEffect(std::string("OF"), vec3(1))},
         {19570 + 900 * 3, new TextEffect(std::string("LASER"), vec3(1))},
 
+        {19570 + 900 * 4, new TunnelEffect(vec3(1, 1, 0.95f), 15, 3.f, 2.f)},
+
         {33990, new InnerCircleEffect(vec3(0,0,1), vec3(1,0,0), 64.f, 1000, -8.0f)},
 
         {43430 + 200 * 1, new TextEffect(std::string("AWESOME"), vec3(1), 0.5)},

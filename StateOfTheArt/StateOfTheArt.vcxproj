@@ -211,6 +211,7 @@
     <ClCompile Include="TextEffect.cpp" />
     <ClCompile Include="TimeProvider.cpp" />
     <ClCompile Include="StateOfTheArt.cpp" />
+    <ClCompile Include="TunnelEffect.cpp" />
     <ClCompile Include="VectorAnim.cpp" />
   </ItemGroup>
   <ItemGroup>

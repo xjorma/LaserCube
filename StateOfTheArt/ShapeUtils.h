@@ -65,7 +65,7 @@ inline std::vector<std::vector<vec2>> Resample(const std::vector<std::vector<vec
 		{
 			int nbAllocated = int(round(float(nbPoint) * measures[i] / totalLen));
 			remainder -= nbAllocated;
-			ret.push_back(Resample(shapes[i], nbPoint, measures[i]));
+			ret.push_back(Resample(shapes[i], nbAllocated, measures[i]));
 		}
 		ret.push_back(Resample(shapes.back(), remainder, measures.back()));
 	}

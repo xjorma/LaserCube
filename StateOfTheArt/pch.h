@@ -34,5 +34,6 @@ using namespace::glm;
 #include <laserdocklib/LaserdockDevice.h>
 #include <laserdocklib/LaserdockDeviceManager.h>
 #pragma warning(default:4251)
+#include <laserdocklib/LaserdockSample.h>
 
 #endif //PCH_H

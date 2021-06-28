@@ -30,6 +30,7 @@ void display(void)
 
     glClear(GL_COLOR_BUFFER_BIT);
     glBlendFunc(GL_ONE, GL_ONE);
+    glEnable(GL_BLEND);
     glBegin(GL_LINES);
     const std::vector<std::vector<vec2>> &frame = choreography->GetShapeFromTime(time);
 

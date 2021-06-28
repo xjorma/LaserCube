@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{f04daa8a-bedc-4a1f-ac2d-fe1b03aeedc7}</ProjectGuid>
-    <RootNamespace>StateOfTheArt</RootNamespace>
+    <ProjectGuid>{cafd0a57-5674-42f3-a7b0-5ee5e6510aa1}</ProjectGuid>
+    <RootNamespace>CircleSample</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -72,42 +72,36 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)..\SharedLibraries\oscpp;$(SolutionDir)..\SharedLibraries\lasercorelib\include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\SharedLibraries\lasercorelib\include\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)..\SharedLibraries\oscpp;$(SolutionDir)..\SharedLibraries\lasercorelib\include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\SharedLibraries\lasercorelib\include\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)..\SharedLibraries\oscpp;$(SolutionDir)..\SharedLibraries\lasercorelib\include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\SharedLibraries\lasercorelib\include\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)..\SharedLibraries\oscpp;$(SolutionDir)..\SharedLibraries\lasercorelib\include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\SharedLibraries\lasercorelib\include\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\SharedLibraries\freeglut\include;$(SolutionDir)\..\SharedLibraries\json\;$(SolutionDir)\..\SharedLibraries\glm\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)\..\SharedLibraries\freeglut\lib\</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Ws2_32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)..\SharedLibraries\lasercorelib\laserdocklib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <CustomBuildStep>
-      <Command>xcopy /y $(SolutionDir)..\SharedLibraries\freeglut\bin\freeglut.dll $(OutDirFullPath).</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Message>Copy Dlls</Message>
-      <Outputs>$(OutDirFullPath\freeglut.dll</Outputs>
+      <Message>Copy laserdocklib.dll</Message>
+      <Outputs>$(OutDirFullPath)\laserdocklib.dll</Outputs>
+      <Command>xcopy /y $(SolutionDir)..\SharedLibraries\lasercorelib\laserdocklib.dll $(OutDirFullPath).</Command>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -116,50 +110,38 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\SharedLibraries\freeglut\include;$(SolutionDir)\..\SharedLibraries\json\;$(SolutionDir)\..\SharedLibraries\glm\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)\..\SharedLibraries\freeglut\lib\</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Ws2_32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)..\SharedLibraries\lasercorelib\laserdocklib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <CustomBuildStep>
-      <Command>xcopy /y $(SolutionDir)..\SharedLibraries\freeglut\bin\freeglut.dll $(OutDirFullPath).</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Message>Copy Dlls</Message>
-      <Outputs>$(OutDirFullPath\freeglut.dll</Outputs>
+      <Message>Copy laserdocklib.dll</Message>
+      <Outputs>$(OutDirFullPath)\laserdocklib.dll</Outputs>
+      <Command>xcopy /y $(SolutionDir)..\SharedLibraries\lasercorelib\laserdocklib.dll $(OutDirFullPath).</Command>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\SharedLibraries\freeglut\include;$(SolutionDir)\..\SharedLibraries\json\;$(SolutionDir)\..\SharedLibraries\glm\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)\..\SharedLibraries\freeglut\lib\x64</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Ws2_32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)..\SharedLibraries\lasercorelib\laserdocklib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <CustomBuildStep>
-      <Command>xcopy /y $(SolutionDir)..\SharedLibraries\freeglut\bin\x64\freeglut.dll $(OutDirFullPath).</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Message>Copy DLLs</Message>
-      <Outputs>$(OutDirFullPath\freeglut.dll</Outputs>
+      <Message>Copy laserdocklib.dll</Message>
+      <Outputs>$(OutDirFullPath)\laserdocklib.dll</Outputs>
+      <Command>xcopy /y $(SolutionDir)..\SharedLibraries\lasercorelib\laserdocklib.dll $(OutDirFullPath).</Command>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -168,62 +150,24 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\SharedLibraries\freeglut\include;$(SolutionDir)\..\SharedLibraries\json\;$(SolutionDir)\..\SharedLibraries\glm\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)\..\SharedLibraries\freeglut\lib\x64</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Ws2_32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)..\SharedLibraries\lasercorelib\laserdocklib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <CustomBuildStep>
-      <Command>xcopy /y $(SolutionDir)..\SharedLibraries\freeglut\bin\x64\freeglut.dll $(OutDirFullPath).</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Message>Copy DLLs</Message>
-      <Outputs>$(OutDirFullPath\freeglut.dll</Outputs>
+      <Message>Copy laserdocklib.dll</Message>
+      <Outputs>$(OutDirFullPath)\laserdocklib.dll</Outputs>
+      <Command>xcopy /y $(SolutionDir)..\SharedLibraries\lasercorelib\laserdocklib.dll $(OutDirFullPath).</Command>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AudioCapture.cpp" />
-    <ClCompile Include="DisturbEffect.cpp" />
-    <ClCompile Include="LineEffect.cpp" />
-    <ClCompile Include="pch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="Choreography.cpp" />
-    <ClCompile Include="Boolean.cpp" />
-    <ClCompile Include="CircleEffect.cpp" />
-    <ClCompile Include="ColorEffect.cpp" />
-    <ClCompile Include="MaskEffect.cpp" />
-    <ClCompile Include="GhostEffect.cpp" />
-    <ClCompile Include="InnerCircleEffect.cpp" />
-    <ClCompile Include="PlasmaEffect.cpp" />
-    <ClCompile Include="TextEffect.cpp" />
-    <ClCompile Include="TimeProvider.cpp" />
-    <ClCompile Include="StateOfTheArt.cpp" />
-    <ClCompile Include="TunnelEffect.cpp" />
-    <ClCompile Include="VectorAnim.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="AudioCapture.h" />
-    <ClInclude Include="Choreography.h" />
-    <ClInclude Include="boolean.h" />
-    <ClInclude Include="Effects.h" />
-    <ClInclude Include="ShapeUtils.h" />
-    <ClInclude Include="RemapTime.h" />
-    <ClInclude Include="TimeProvider.h" />
-    <ClInclude Include="pch.h" />
-    <ClInclude Include="VectorAnim.h" />
+    <ClCompile Include="CircleSample.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -29,5 +29,10 @@ using namespace::glm;
 // OSCPP
 #include <oscpp/server.hpp>
 
+// Laseros
+#pragma warning(disable:4251)  // warning C4251: 'LaserdockDevice::d': class 'std::unique_ptr<LaserdockDevicePrivate,std::default_delete<LaserdockDevicePrivate>>' needs to have dll-interface to be used by clients of class 'LaserdockDevice'
+#include <laserdocklib/LaserdockDevice.h>
+#include <laserdocklib/LaserdockDeviceManager.h>
+#pragma warning(default:4251)
 
 #endif //PCH_H

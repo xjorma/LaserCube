@@ -21,9 +21,9 @@ int main()
             //curSample.r = int(pow((sin((p + (time * 1)) * (pi * 4)) / 2. + 0.5), 1) * intensity);
             //curSample.g = int(pow((sin((p + (time * 2)) * (pi * 4)) / 2. + 0.5), 1) * intensity);
             //curSample.b = int(pow((sin((p + (time * 3)) * (pi * 4)) / 2. + 0.5), 1) * intensity);
-            curSample.r = intensity;
-            curSample.g = intensity;
-            curSample.b = 128;
+            curSample.r = (uint16_t)intensity;
+            curSample.g = (uint16_t)intensity;
+            curSample.b = (uint16_t)intensity / 2;
             samples.push_back(curSample);
         }
         laserCube.DrawSamples(samples);

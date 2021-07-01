@@ -25,6 +25,7 @@ using namespace::glm;
 
 // Winsock
 #include <WinSock2.h>
+#include <Ws2tcpip.h>
 
 // OSCPP
 #include <oscpp/server.hpp>

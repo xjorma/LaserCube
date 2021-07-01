@@ -78,12 +78,15 @@ class LaserCube
 
     uint8_t     *m_transfert_buff;
 
+    bool        m_pending_kill;
+    std::thread *m_process_message_thread;
+
 
     void sendCommand(const std::vector<uint8_t> &msg, const std::string &addr, int repeat = 2)
     {
         for (int i = 0; i < repeat; i++)
         {
-            m_cmd_socket.SendTo(std::string("255.255.255.255"), constants::cmd_port, (char*)msg.data(), (int)msg.size());
+            m_cmd_socket.SendTo(addr, constants::cmd_port, (char*)msg.data(), (int)msg.size());
         }
     }
 
@@ -131,25 +134,34 @@ class LaserCube
 
     void ProcessMessage()
     {
-        std::array<uint8_t, 4096> cmd;
-        int size = m_cmd_socket.RecvFrom((char*)cmd.data(), (int)cmd.size());
-        if (size <= 0)
+        for (;;)
         {
-            return;
-        }
+            if (m_pending_kill)
+            {
+                break;
+            }
+            std::array<uint8_t, 4096> cmd;
+            int size = m_cmd_socket.RecvFrom((char*)cmd.data(), (int)cmd.size());
+            if (size <= 0)
+            {
+                continue;
+            }
+            switch (cmd[0])
+            {
+            case  cmds::LASERCUBE_GET_FULL_INFO:
+                if (size > 3)
+                {
+                    ProcessFullInfo(cmd.data());
+                }
+                break;
+            case cmds::LASERCUBE_ENABLE_BUFFER_SIZE_RESPONSE_ON_DATA:
+                // nothing to do just acknowledging
+                break;
+            case cmds::LASERCUBE_CMD_GET_RINGBUFFER_EMPTY_SAMPLE_COUNT:
+                m_buff_free = (int)cmd[2] + ((int)cmd[3] << 8);
+                break;
 
-        switch(cmd[0])
-        {
-        case  cmds::LASERCUBE_GET_FULL_INFO:
-            ProcessFullInfo(cmd.data());
-            break;
-        case cmds::LASERCUBE_ENABLE_BUFFER_SIZE_RESPONSE_ON_DATA:
-            // nothing to do just acknowledging
-            break;
-        case cmds::LASERCUBE_CMD_GET_RINGBUFFER_EMPTY_SAMPLE_COUNT:
-            m_buff_free = (int)cmd[2] + ((int)cmd[3] << 8);
-            break;
-
+            }
         }
     }
 
@@ -164,7 +176,7 @@ class LaserCube
             if (size >= 0 && cmd[0] == cmds::LASERCUBE_GET_FULL_INFO && size >= 3)
             {
                 ProcessFullInfo(cmd.data());
-                std::cout << "Found" << m_modelname << "Ip: " << m_ip_adress << "Sn:" << m_serialnumber << "\n";
+                std::cout << "Found" << m_modelname << " Ip: " << m_ip_adress  << "\n";
                 break;
             }
         }
@@ -174,25 +186,28 @@ class LaserCube
 
 
 public:
-    LaserCube() : m_frame_num(0), m_message_num(0), m_transfert_buff(new uint8_t[4 + sizeof(LaserSample) * constants::max_samples_per_udp_packet]), m_cmd_socket(1), m_data_socket(0)
+    LaserCube() : m_frame_num(0), m_message_num(0), m_transfert_buff(new uint8_t[4 + sizeof(LaserSample) * constants::max_samples_per_udp_packet]), m_cmd_socket(0), m_data_socket(0), m_pending_kill(false)
     {
         m_cmd_socket.SetBroadCast();
         m_cmd_socket.Bind(constants::cmd_port);
         m_data_socket.Bind(constants::data_port);
         Initialize();
-
+        m_process_message_thread = new std::thread(&LaserCube::ProcessMessage, this);
     }
 
     ~LaserCube()
     {
         delete m_transfert_buff;
+        m_pending_kill = true;
         sendCommand({ cmds::LASERCUBE_ENABLE_BUFFER_SIZE_RESPONSE_ON_DATA,  0}, m_ip_adress);
         sendCommand({ cmds::LASERCUBE_CMD_SET_OUTPUT,  0 }, m_ip_adress);
+        m_process_message_thread->join();
+        delete m_process_message_thread;
+        delete[] m_transfert_buff;
     }
 
-    void DrawSample(const std::vector<LaserSample> &samples, int maxBufferSize = 1000)
+    void DrawSamples(const std::vector<LaserSample> &samples, int maxBufferSize = 1000)
     {
-        ProcessMessage();
         if (m_buff_free < (m_buff_size - maxBufferSize))
         {
             std::this_thread::sleep_for(std::chrono::microseconds((1000000 * 100) / m_dac_rate));
@@ -210,7 +225,10 @@ public:
             int sampleToSend = min((int)samples.size() - sentSample, constants::max_samples_per_udp_packet);
             memcpy(m_transfert_buff + 4, &samples[sentSample], sampleToSend * sizeof(LaserSample));
 
-            m_data_socket.SendTo(m_ip_adress, constants::data_port, (char *)m_transfert_buff, 4 + sizeof(LaserSample) * sampleToSend);
+            //m_data_socket.SendTo(m_ip_adress, constants::data_port, (char *)m_transfert_buff, 4 + sizeof(LaserSample) * sampleToSend);
+            m_cmd_socket.SendTo(m_ip_adress, constants::data_port, (char *)m_transfert_buff, 4 + sizeof(LaserSample) * sampleToSend);
+            //sendCommand({ cmds::LASERCUBE_ENABLE_BUFFER_SIZE_RESPONSE_ON_DATA,  1 }, m_ip_adress);
+
             m_buff_free -= sampleToSend;
             sentSample += sampleToSend;
             m_message_num++;
@@ -234,7 +252,7 @@ int main()
         samples.reserve(256);
         float time = 0.0f;
         const float pi = 3.14159265359f;
-        int pointInShape = 50;
+        int pointInShape = 140;
         for (int i = 0; i < pointInShape; i++)
         {
             float p = float(i) / float(pointInShape);
@@ -250,7 +268,7 @@ int main()
             curSample.b = 0;
             samples.push_back(curSample);
         }
-        laserCube.DrawSample(samples);
+        laserCube.DrawSamples(samples);
     }
 
 

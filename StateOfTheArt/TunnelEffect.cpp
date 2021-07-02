@@ -18,9 +18,9 @@ inline vec3 computeCenter(float d)
 
 std::vector<std::vector<Vertex>> TunnelEffect::Apply(const std::vector<std::vector<vec2>>& dummy, float iTime)
 {
+	std::vector<std::vector<Vertex>> ret;
+	bool tracing = false;
 	const int nbPoints = 1000;
-	std::vector<Vertex> tunnel;
-	tunnel.reserve(nbPoints);
 	float doffset = iTime * 5.f;
 	vec3 bcenter = computeCenter(doffset);
 	for (int i = 0; i < nbPoints; i++)
@@ -30,11 +30,22 @@ std::vector<std::vector<Vertex>> TunnelEffect::Apply(const std::vector<std::vect
 		float a = (d + doffset) * radians(360.0f) / (helicoidal);
 		vec3 p = vec3(cos(a), sin(a), d) + center - bcenter;
 		vec2 pp = vec2(p.xy) / (p.z + 0.5f);
-		tunnel.emplace_back(pp * 2047.0f + 2047.0f, applyFog(color, vec3(0.25,0,0), d, 0.1f));
+		if (pp.x > -1.0f && pp.x < 1.0f && pp.y > -1.0f && pp.y < 1.0f)
+		{
+			if (!tracing)
+			{
+				tracing = true;
+				std::vector<Vertex> v;
+				ret.push_back(v);
+			}
+			vec3 col = applyFog(color, vec3(0.25, 0, 0), d, 0.1f);
+			ret.back().emplace_back(pp * 2047.0f + 2047.0f, col);
+		}
+		else
+		{
+			tracing = false;
+		}
 	}
 
-	//std::vector<std::vector<Vertex>> ret = boolean(tunnel, {vec2(0), vec2(0, 4095), vec2(4095, 4095), vec2(0) }, true)
-
-	std::vector<std::vector<Vertex>> ret = { tunnel };
-	return std::move(ret);
+	return ret;
 }

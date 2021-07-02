@@ -67,7 +67,7 @@ int main(int argc, char** argv)
         {2040, new MaskEffect(hand, vec3(0,1,0), vec3(0,0,1), 0.95f)},                              // Girl in hand
         {7720, new ColorEffect(vec3(0,0,1))},                                                       // James Bond End
 
-        {19570, new TextEffect(std::string("MAJOR X"), vec3(1))},
+        {19570, new TextEffect(std::string("MAJOR-X"), vec3(1))},
         {19570 + 900, new TextEffect(std::string("STATE"), vec3(1))},
         {19570 + 900 * 2, new TextEffect(std::string("OF"), vec3(1))},
         {19570 + 900 * 3, new TextEffect(std::string("LASER"), vec3(1))},
@@ -225,7 +225,7 @@ int main(int argc, char** argv)
             const std::vector<std::vector<vec2>>& frame = choreography->GetShapeFromTime(time);
             std::vector<std::vector<Vertex>> vertices = sequencer->Tick(time, frame);
 
-            lastPos = ConvertToSamples(vertices, samples, lastPos, drawStep, moveStep, vec3(0, 0, 0));
+            lastPos = ConvertToSamples(vertices, samples, lastPos, drawStep, moveStep, vec3(0, 1, 0));
 
             laserCube.DrawSamples(samples, 1500);
         }

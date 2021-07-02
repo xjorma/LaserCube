@@ -91,7 +91,7 @@ vec2 ConvertToSamples(const std::vector<std::vector<Vertex>>& shapes, std::vecto
 		std::vector<Vertex> shape = shapes[i];
 		if (shape.size())
 		{
-			if (first)
+			if (!first)
 			{
 				if (distance(lastPos, shape[0].pos) > distance(lastPos, shape.back().pos))
 				{

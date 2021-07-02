@@ -25,7 +25,6 @@ std::vector<std::vector<Vertex>> DisturbEffect::Apply(const std::vector<std::vec
 {
 	float strength = this->strength;
 	std::vector<vec2> sample = audioCapture->GetSamples();
-	const int nbPoints = 300;
-	return std::move(Colorize(Pertubate(Resample(shapes, nbPoints), [strength, sample](vec2 p) { return vec2(sample[clamp(int((p.x * float(sample.size())/ 4096.0f)), 0, (int)sample.size())]) * strength;
+	return std::move(Colorize(Pertubate(Resample(shapes, nbPoints), [strength, sample](vec2 p) { return vec2(pow(sample[clamp(int((p.x * float(sample.size())/ 4096.0f)), 0, (int)sample.size())], vec2(2.f))) * strength;
 }), shapeColor));
 }

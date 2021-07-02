@@ -61,9 +61,10 @@ class DisturbEffect : public Effect
 {
 	float strength;
 	vec3 shapeColor;
+	int nbPoints;
 	AudioCapture* audioCapture;
 public:
-	DisturbEffect(float _strength, vec3 _shapeColor, AudioCapture* _audioCapture) : strength(_strength), shapeColor(_shapeColor), audioCapture(_audioCapture)
+	DisturbEffect(float _strength, vec3 _shapeColor, int _nbPoints, AudioCapture* _audioCapture) : strength(_strength), shapeColor(_shapeColor), nbPoints(_nbPoints), audioCapture(_audioCapture)
 	{
 	}
 	virtual std::vector<std::vector<Vertex>> Apply(const std::vector<std::vector<vec2>>& shape, float time) override;

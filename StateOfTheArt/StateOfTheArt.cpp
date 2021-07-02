@@ -72,7 +72,7 @@ int main(int argc, char** argv)
         {19570 + 900 * 2, new TextEffect(std::string("OF"), vec3(1))},
         {19570 + 900 * 3, new TextEffect(std::string("LASER"), vec3(1))},
 
-        {19570 + 900 * 4, new TunnelEffect(vec3(1, 1, 0.95f), 15, 3.f, 2.f)},
+        {19570 + 900 * 4, new TunnelEffect(vec3(1, 1, 0.95f), 15, 3.f, 4.f)},
 
         {33990, new InnerCircleEffect(vec3(0,0,1), vec3(1,0,0), 64.f, 1000, -8.0f)},
 
@@ -96,7 +96,7 @@ int main(int argc, char** argv)
         {43430 + 200 * 15, new TextEffect(std::string("VOTE"), vec3(1), 0.5)},
         {43430 + 200 * 16, new TextEffect(std::string("YEAH"), vec3(1), 0.5)},
 
-        {46830, new GhostEffect(vec3(0,1,0), vec3(0,0,1), 4)},
+        {46830, new GhostEffect(vec3(0,1,0), vec3(0,0,1), 3)},
         {58030, new PlasmaEffect(1000)},
         {66670, new CircleEffect(1500.0f, vec3(0,1,0), vec3(0,0,1), audioCapture)},
 
@@ -155,10 +155,10 @@ int main(int argc, char** argv)
         {91070, new InnerCircleEffect(vec3(1,1,0), vec3(0,1,1), 64.f, 1000, -8.0f)},
 
 
-        {91510, new GhostEffect(vec3(0,1,0), vec3(0,0.3,0.7f), 4)},                         // Jump
-        {105550, new DisturbEffect(200.0f, vec3(0.5,1,0.5), audioCapture)},                 // Glichy
+        {91510, new GhostEffect(vec3(0,1,0), vec3(0,0.3,0.7f), 3)},                         // Jump
+        {105550, new DisturbEffect(500.0f, vec3(0.5,1,0.5), 150, audioCapture)},            // Glichy
         {138070, new PlasmaEffect(1000)},                                                   // Tubuloc
-        {154750, new GhostEffect(vec3(0,1,0), vec3(0.2f,0.2f,0.5f), 4)},
+        {154750, new GhostEffect(vec3(0,1,0), vec3(0.2f,0.2f,0.5f), 3)},
         {175590, new PlasmaEffect(1000)},                                                   // outline
 
         {203310, new InnerCircleEffect(vec3(0,0,1), vec3(1,0,0), 64.f, 1000, -8.0f)},
@@ -198,9 +198,9 @@ int main(int argc, char** argv)
 
      });
 
-     const bool isOnLaser = true;
+     const bool isOnLaser = false;
+     const bool osc = true;
 
-     bool osc = true;
      if (osc)
      {
          timeProvider = new OscTimeProvider(8666);

@@ -7,6 +7,7 @@
 #include "AudioCapture.h"
 #include "LaserCube.h"
 #include "LaserHelper.h"
+#include "CommandLineParser.h"
 
 //VectorAnim *animTest;
 Choreography* choreography;
@@ -43,7 +44,7 @@ void display(void)
     std::vector<LaserSample> samples;
     float drawStep = 25.0f;
     float moveStep = 30.0f;
-    glutLastPos = ConvertToSamples(vertices, samples, glutLastPos, drawStep, moveStep, vec3(0.5, 0.5, 0));
+    glutLastPos = ConvertToSamples(vertices, samples, glutLastPos, drawStep, moveStep, vec3(0), 1.0f);
 
     const bool emulLaser = true;
 
@@ -51,7 +52,7 @@ void display(void)
     {
         for (int i = 0; i < (int)samples.size() - 1; i++)
         {
-            const float colMax = 128.0f;
+            const float colMax = 4095.0f;
             glColor3f(samples[i].r / colMax, samples[i].g / colMax, samples[i].b * 2.0f / colMax);
             glVertex2f(4095.0f - samples[i].x, 4095.0f - samples[i].y);
             glColor3f(samples[i + 1].r / colMax, samples[i + 1].g / colMax, samples[i + 1].b * 2.0f / colMax);
@@ -82,6 +83,7 @@ void display(void)
 
 int main(int argc, char** argv)
 {
+    InputParser inputParser(argc, argv);
     audioCapture = new AudioCapture();
     choreography = new Choreography("./data/split_map.json", "./data/Sequence.txt", "./data/");
     remapTime = new RemapTime("./data/remap.txt");
@@ -91,56 +93,56 @@ int main(int argc, char** argv)
         {2040, new MaskEffect(hand, vec3(0,1,0), vec3(0,0,1), 0.95f)},                              // Girl in hand
         {7720, new ColorEffect(vec3(0,0,1))},                                                       // James Bond End
 
-        {19570, new TextEffect(std::string("MAJOR-X"), vec3(1))},
-        {19570 + 900, new TextEffect(std::string("STATE"), vec3(1))},
-        {19570 + 900 * 2, new TextEffect(std::string("OF"), vec3(1))},
-        {19570 + 900 * 3, new TextEffect(std::string("LASER"), vec3(1))},
+        {19570, new TextEffect(std::string("STATE"), vec3(1))},
+        {19570 + 900, new TextEffect(std::string("OF"), vec3(1))},
+        {19570 + 900 * 2, new TextEffect(std::string("LASER"), vec3(1))},
+        {19570 + 900 * 3, new TextEffect(std::string("BEAM"), vec3(1))},
 
-        {19570 + 900 * 4, new TunnelEffect(vec3(1, 1, 0.95f), 15, 3.f, 4.f)},
+        {19570 + 900 * 4, new TunnelEffect(vec3(1, 1, 0.95f), 15, 3.f, 3.f)},
 
         {33990, new InnerCircleEffect(vec3(0,0,1), vec3(1,0,0), 64.f, 1000, -8.0f)},
 
-        {43430 + 200 * 1, new TextEffect(std::string("COOL"), vec3(1), 0.5)},
-        {43430 + 200 * 2, new TextEffect(std::string("CODE"), vec3(1), 0.5)},
-        {43430 + 200 * 3, new TextEffect(std::string("BY"), vec3(1), 0.5)},
-        {43430 + 200 * 4, new TextEffect(std::string("MAJOR-X"), vec3(1), 0.5)},
-        {43430 + 200 * 5, new TextEffect(std::string("KRAZY"), vec3(1), 0.5)},
-        {43430 + 200 * 6, new TextEffect(std::string("MUSIC"), vec3(1), 0.5)},
-        {43430 + 200 * 7, new TextEffect(std::string("BY"), vec3(1), 0.5)},
-        {43430 + 200 * 8, new TextEffect(std::string("TRAVOLTA"), vec3(1), 0.5)},
-        {43430 + 200 * 9, new TextEffect(std::string("HOLO"), vec3(1), 0.5)},
-        {43430 + 200 * 10, new TextEffect(std::string("SAPIENS"), vec3(1), 0.5)},
-        {43430 + 200 * 11, new TextEffect(std::string("LOVES"), vec3(1), 0.5)},
-        {43430 + 200 * 12, new TextEffect(std::string("SPACEBALLS"), vec3(1), 0.5)},
-        {43430 + 200 * 10, new TextEffect(std::string("MONTREAL"), vec3(1), 0.5)},
-        {43430 + 200 * 11, new TextEffect(std::string("CANADA"), vec3(1), 0.5)},
-        {43430 + 200 * 12, new TextEffect(std::string("LASER"), vec3(1), 0.5)},
-        {43430 + 200 * 13, new TextEffect(std::string("CUBE"), vec3(1), 0.5)},
-        {43430 + 200 * 14, new TextEffect(std::string("RULEZ"), vec3(1), 0.5)},
-        {43430 + 200 * 15, new TextEffect(std::string("VOTE"), vec3(1), 0.5)},
-        {43430 + 200 * 16, new TextEffect(std::string("YEAH"), vec3(1), 0.5)},
+        {43430 + 200 * 1, new TextEffect(std::string("COOL"), vec3(1), 0.75)},
+        {43430 + 200 * 2, new TextEffect(std::string("CODE"), vec3(1), 0.75)},
+        {43430 + 200 * 3, new TextEffect(std::string("BY"), vec3(1), 0.75)},
+        {43430 + 200 * 4, new TextEffect(std::string("MAJOR-X"), vec3(1), 0.75)},
+        {43430 + 200 * 5, new TextEffect(std::string("KRAZY"), vec3(1), 0.75)},
+        {43430 + 200 * 6, new TextEffect(std::string("MUSIC"), vec3(1), 0.75)},
+        {43430 + 200 * 7, new TextEffect(std::string("BY"), vec3(1), 0.75)},
+        {43430 + 200 * 8, new TextEffect(std::string("TRAVOLTA"), vec3(1), 0.75)},
+        {43430 + 200 * 9, new TextEffect(std::string("HOLO"), vec3(1), 0.75)},
+        {43430 + 200 * 10, new TextEffect(std::string("SAPIENS"), vec3(1), 0.75)},
+        {43430 + 200 * 11, new TextEffect(std::string("LOVES"), vec3(1), 0.75)},
+        {43430 + 200 * 12, new TextEffect(std::string("SPACEBALLS"), vec3(1), 0.75)},
+        {43430 + 200 * 10, new TextEffect(std::string("MONTREAL"), vec3(1), 0.75)},
+        {43430 + 200 * 11, new TextEffect(std::string("CANADA"), vec3(1), 0.75)},
+        {43430 + 200 * 12, new TextEffect(std::string("LASER"), vec3(1), 0.75)},
+        {43430 + 200 * 13, new TextEffect(std::string("CUBE"), vec3(1), 0.75)},
+        {43430 + 200 * 14, new TextEffect(std::string("RULEZ"), vec3(1), 0.75)},
+        {43430 + 200 * 15, new TextEffect(std::string("VOTE"), vec3(1), 0.75)},
+        {43430 + 200 * 16, new TextEffect(std::string("YEAH"), vec3(1), 0.75)},
 
-        {46830, new GhostEffect(vec3(0,1,0), vec3(0,0,1), 3)},
-        {58030, new PlasmaEffect(1000)},
-        {66670, new CircleEffect(1500.0f, vec3(0,1,0), vec3(0,0,1), audioCapture)},
+        {46830, new CircleEffect(1500.0f, vec3(0,1,0), vec3(0,0,1), audioCapture)},
+        {58030, new LineEffect(0.1f, vec3(0,1,1), vec3(0,1,1), vec3(1,0,0), audioCapture)},
+        {66670, new CircleEffect(1500.0f, vec3(1,0,1), vec3(0,1,0), audioCapture)},
 
-        {73670 + 200 * 1, new TextEffect(std::string("THANKX"), vec3(1), 0.5)},
-        {73670 + 200 * 2, new TextEffect(std::string("ENITALP"), vec3(1), 0.5)},
-        {73670 + 200 * 3, new TextEffect(std::string("NICHOLAS"), vec3(1), 0.5)},
-        {73670 + 200 * 4, new TextEffect(std::string("VECTOR"), vec3(1), 0.5)},
-        {73670 + 200 * 5, new TextEffect(std::string("BEAM"), vec3(1), 0.5)},
-        {73670 + 200 * 6, new TextEffect(std::string("DANCE"), vec3(1), 0.5)},
-        {73670 + 200 * 7, new TextEffect(std::string("LOUD"), vec3(1), 0.5)},
-        {73670 + 200 * 8, new TextEffect(std::string("REAL"), vec3(1), 0.5)},
-        {73670 + 200 * 9, new TextEffect(std::string("TIME"), vec3(1), 0.5)},
-        {73670 + 200 * 10, new TextEffect(std::string("GOGO"), vec3(1), 0.5)},
-        {73670 + 200 * 11, new TextEffect(std::string("GADGET"), vec3(1), 0.5)},
-        {73670 + 200 * 12, new TextEffect(std::string("SUPER"), vec3(1), 0.5)},
-        {73670 + 200 * 10, new TextEffect(std::string("OPTIMIZE"), vec3(1), 0.5)},
-        {73670 + 200 * 11, new TextEffect(std::string("LIGHT"), vec3(1), 0.5)},
-        {73670 + 200 * 12, new TextEffect(std::string("SPEED"), vec3(1), 0.5)},
-        {73670 + 200 * 13, new TextEffect(std::string("ZERO"), vec3(1), 0.5)},
-        {73670 + 200 * 14, new TextEffect(std::string("LATENCY"), vec3(1), 0.5)},
+        {73670 + 200 * 1, new TextEffect(std::string("THANX"), vec3(1), 0.75)},
+        {73670 + 200 * 2, new TextEffect(std::string("ENITALP"), vec3(1), 0.75)},
+        {73670 + 200 * 3, new TextEffect(std::string("NICHOLAS"), vec3(1), 0.75)},
+        {73670 + 200 * 4, new TextEffect(std::string("VECTOR"), vec3(1), 0.75)},
+        {73670 + 200 * 5, new TextEffect(std::string("BEAM"), vec3(1), 0.75)},
+        {73670 + 200 * 6, new TextEffect(std::string("DANCE"), vec3(1), 0.75)},
+        {73670 + 200 * 7, new TextEffect(std::string("LOUD"), vec3(1), 0.75)},
+        {73670 + 200 * 8, new TextEffect(std::string("REAL"), vec3(1), 0.75)},
+        {73670 + 200 * 9, new TextEffect(std::string("TIME"), vec3(1), 0.75)},
+        {73670 + 200 * 10, new TextEffect(std::string("GOGO"), vec3(1), 0.75)},
+        {73670 + 200 * 11, new TextEffect(std::string("GADGET"), vec3(1), 0.75)},
+        {73670 + 200 * 12, new TextEffect(std::string("SUPER"), vec3(1), 0.75)},
+        {73670 + 200 * 10, new TextEffect(std::string("HOT"), vec3(1), 0.75)},
+        {73670 + 200 * 11, new TextEffect(std::string("LIGHT"), vec3(1), 0.75)},
+        {73670 + 200 * 12, new TextEffect(std::string("SPEED"), vec3(1), 0.75)},
+        {73670 + 200 * 13, new TextEffect(std::string("CUTE"), vec3(1), 0.75)},
+        {73670 + 200 * 14, new TextEffect(std::string("SHAPE"), vec3(1), 0.75)},
 
 
         {76670, new InnerCircleEffect(vec3(0,0,1), vec3(1,0,0), 64.f, 1000, -8.0f)},
@@ -179,10 +181,10 @@ int main(int argc, char** argv)
         {91070, new InnerCircleEffect(vec3(1,1,0), vec3(0,1,1), 64.f, 1000, -8.0f)},
 
 
-        {91510, new GhostEffect(vec3(0,1,0), vec3(0,0.3,0.7f), 3)},                         // Jump
+        {91510, new CircleEffect(1500.0f, vec3(0.5,1,0.5), vec3(1,1,0), audioCapture)},         // Jump
         {105550, new DisturbEffect(2000.0f, vec3(0.5,1,0.5), 100, audioCapture)},           // Glichy
         {138070, new PlasmaEffect(1000)},                                                   // Tubuloc
-        {154750, new GhostEffect(vec3(0,1,0), vec3(0.2f,0.2f,0.5f), 3)},
+        {154750, new CircleEffect(1500.0f, vec3(0.5,1,0.5), vec3(1,1,0), audioCapture)},
         {175590, new PlasmaEffect(1000)},                                                   // outline
 
         {203310, new InnerCircleEffect(vec3(0,0,1), vec3(1,0,0), 64.f, 1000, -8.0f)},
@@ -222,10 +224,7 @@ int main(int argc, char** argv)
 
      });
 
-     const bool isOnLaser = true;
-     const bool osc = true;
-
-     if (osc)
+     if(inputParser.cmdOptionExists("-osc"))
      {
          timeProvider = new OscTimeProvider(8666);
      }
@@ -234,13 +233,19 @@ int main(int argc, char** argv)
          timeProvider = new ClockTimeProvider();
      }
 
-
-    if(isOnLaser)
+    if(inputParser.cmdOptionExists("-laser"))
     {
         LaserCube laserCube;
         std::vector<LaserSample> samples;
         vec2 lastPos = vec2(0);
-        float drawStep = 50.0f;
+        float minDist = 18000;
+        float maxDist = 30000;
+        float minStep = 25;
+        float maxStep = 70;
+        float intensity = 0.1f;
+        const std::string& intensityStr = inputParser.getCmdOption("-i");
+        intensity = intensityStr.size() ? std::stof(intensityStr) / 100.0f : intensity;
+
         float moveStep = 30.0f;
         for (;;)
         {
@@ -249,7 +254,12 @@ int main(int argc, char** argv)
             const std::vector<std::vector<vec2>>& frame = choreography->GetShapeFromTime(time);
             std::vector<std::vector<Vertex>> vertices = sequencer->Tick(time, frame);
 
-            lastPos = ConvertToSamples(vertices, samples, lastPos, drawStep, moveStep, vec3(0, 0, 0));
+            float totalLen;
+            std::vector<float> dists = Measure(vertices, totalLen);
+
+            float drawStep = clamp((totalLen - minDist) / (maxDist - minDist), 0.0f, 1.0f) * (maxStep - minStep) + minStep;
+
+            lastPos = ConvertToSamples(vertices, samples, lastPos, drawStep, moveStep, vec3(0, 0, 0), intensity);
 
             laserCube.DrawSamples(samples, 1500);
         }

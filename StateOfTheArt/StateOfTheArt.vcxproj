@@ -192,6 +192,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AudioCapture.cpp" />
+    <ClCompile Include="CommandLineParser.h" />
     <ClCompile Include="DisturbEffect.cpp" />
     <ClCompile Include="LaserCube.cpp" />
     <ClCompile Include="LineEffect.cpp" />

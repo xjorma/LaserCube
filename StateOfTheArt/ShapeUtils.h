@@ -21,7 +21,7 @@ inline std::vector<float> Measure(const std::vector<std::vector<vec2>>& shapes, 
 		measure.push_back(dist);
 		totalLen += dist;
 	}
-	return std::move(measure);
+	return measure;
 }
 
 inline std::vector<vec2> Resample(const std::vector<vec2>& shape, int nbPoints, float measure)
@@ -50,7 +50,7 @@ inline std::vector<vec2> Resample(const std::vector<vec2>& shape, int nbPoints, 
 		ret.push_back(mix(v0, v1, alpha));
 		cursor += inc;
 	}
-	return std::move(ret);
+	return ret;
 }
 
 inline std::vector<std::vector<vec2>> Resample(const std::vector<std::vector<vec2>>& shapes, int nbPoint)
@@ -70,7 +70,7 @@ inline std::vector<std::vector<vec2>> Resample(const std::vector<std::vector<vec
 		}
 		ret.push_back(Resample(shapes.back(), remainder, measures.back()));
 	}
-	return std::move(ret);
+	return ret;
 }
 
 
@@ -88,7 +88,7 @@ inline std::vector<std::vector<Vertex>> Colorize(const std::vector<std::vector<v
 		}
 		ret.push_back(std::move(vShape));
 	}
-	return std::move(ret);
+	return ret;
 }
 
 inline std::vector<std::vector<Vertex>> Colorize(const std::vector<std::vector<vec2>>& shapes, std::function<vec3(vec2)> map)
@@ -105,5 +105,5 @@ inline std::vector<std::vector<Vertex>> Colorize(const std::vector<std::vector<v
 		}
 		ret.push_back(std::move(vShape));
 	}
-	return std::move(ret);
+	return ret;
 }

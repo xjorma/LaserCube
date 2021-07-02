@@ -18,7 +18,7 @@ std::vector<vec2> BuildCircleShape(float radius, int subdiv, AudioCapture *audio
 		float r = mix(radius, radius * 1.3f, s);
 		ret.push_back(v * r + 2047.0f);
 	}
-	return std::move(ret);
+	return ret;
 }
 
 
@@ -36,5 +36,5 @@ std::vector<std::vector<Vertex>> CircleEffect::Apply(const std::vector<std::vect
 	vAllShape.reserve(circleVShapes.size() + vShapes.size());
 	vAllShape.insert(vAllShape.end(), circleVShapes.begin(), circleVShapes.end());
 	vAllShape.insert(vAllShape.end(), vShapes.begin(), vShapes.end());
-	return std::move(vAllShape);
+	return vAllShape;
 }

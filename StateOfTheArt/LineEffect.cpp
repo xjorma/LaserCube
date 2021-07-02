@@ -7,11 +7,11 @@
 std::vector<vec2> BuildLineShape(float height, int subdiv, AudioCapture* audioCapture)
 {
 	std::vector<vec2> ret;
-	ret.reserve(subdiv);
+	ret.reserve(subdiv + 1);
 	std::vector<vec2> sample = audioCapture->GetSamples();
-	for (int i = 0; i < subdiv; i++)
+	for (int i = 0; i < subdiv + 1; i++)
 	{
-		vec2 v = vec2(mix(0.0f, 4095.0f, float(i) / float(subdiv + 1)), height);
+		vec2 v = vec2(mix(0.0f, 4095.0f, float(i) / float(subdiv)), height);
 		int idx = (int)floor((float(i) / float(subdiv + 1)) * float(sample.size() - 1));
 		float s = dot(sample[idx], vec2(1));
 		ret.push_back(v + vec2(0, s * 400.f));

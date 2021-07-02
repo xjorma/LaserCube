@@ -67,6 +67,16 @@ void Resample(const std::vector<Vertex>& shape, std::vector<Vertex>& samples, in
 	}
 }
 
+void MoveToPoint(std::vector<LaserSample>& samples, vec2 start, vec2 end, float step, vec3 moveColor)
+{
+	int nbPoints = (int)round(distance(start, end) / step);
+	for (int i = 0; i < nbPoints; i++)
+	{
+		vec2 pos = mix(start, end, float(i + 1) / float(nbPoints));
+		samples.push_back(ConvertToLaser(Vertex(pos, moveColor)));
+	}
+}
+
 
 vec2 ConvertToSamples(const std::vector<std::vector<Vertex>>& shapes, std::vector<LaserSample>& samples, vec2 lastPos, float drawStep, float moveStep, vec3 moveColor)
 {
@@ -82,19 +92,11 @@ vec2 ConvertToSamples(const std::vector<std::vector<Vertex>>& shapes, std::vecto
 		if (shape.size())
 		{
 			// Set a pause at a the begining of a shape
-			int pause = 3;
 			if (first)
 			{
 				first = false;
-				pause = 6;
 			}
-			Vertex pauseVertex = shape[0];
-			pauseVertex.color = vec3(0);
-			LaserSample pauseSample = ConvertToLaser(pauseVertex);
-			for (int i = 0; i < pause; i++)
-			{
-				samples.push_back(pauseSample);
-			}
+			MoveToPoint(samples, lastPos, shape[0].pos, moveStep, moveColor);
 			// Resample
 			resampled.clear();
 			Resample(shape, resampled, int(dists[i] / 25.0f), dists[i]);

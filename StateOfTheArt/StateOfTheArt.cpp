@@ -217,7 +217,7 @@ int main(int argc, char** argv)
         std::vector<LaserSample> samples;
         vec2 lastPos = vec2(0);
         float drawStep = 25.0f;
-        float moveStep = 40.0f;
+        float moveStep = 30.0f;
         for (;;)
         {
             double time = timeProvider->GetTime();
@@ -225,7 +225,7 @@ int main(int argc, char** argv)
             const std::vector<std::vector<vec2>>& frame = choreography->GetShapeFromTime(time);
             std::vector<std::vector<Vertex>> vertices = sequencer->Tick(time, frame);
 
-            lastPos = ConvertToSamples(vertices, samples, lastPos, drawStep, moveStep, vec3(0));
+            lastPos = ConvertToSamples(vertices, samples, lastPos, drawStep, moveStep, vec3(0,0.5,0));
 
             laserCube.DrawSamples(samples, 2000);
         }

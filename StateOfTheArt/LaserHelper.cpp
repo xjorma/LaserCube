@@ -88,12 +88,15 @@ vec2 ConvertToSamples(const std::vector<std::vector<Vertex>>& shapes, std::vecto
 	bool first = true;
 	for (int i = 0; i < shapes.size(); i++)
 	{
-		const std::vector<Vertex>& shape = shapes[i];
+		std::vector<Vertex> shape = shapes[i];
 		if (shape.size())
 		{
-			// Set a pause at a the begining of a shape
 			if (first)
 			{
+				if (distance(lastPos, shape[0].pos) > distance(lastPos, shape.back().pos))
+				{
+					std::reverse(shape.begin(), shape.end());;
+				}
 				first = false;
 			}
 			MoveToPoint(samples, lastPos, shape[0].pos, moveStep, moveColor);

@@ -67,7 +67,7 @@ int main(int argc, char** argv)
         {2040, new MaskEffect(hand, vec3(0,1,0), vec3(0,0,1), 0.95f)},                              // Girl in hand
         {7720, new ColorEffect(vec3(0,0,1))},                                                       // James Bond End
 
-        {19570, new TextEffect(std::string("HOLOSAPIENS"), vec3(1))},
+        {19570, new TextEffect(std::string("MAJOR X"), vec3(1))},
         {19570 + 900, new TextEffect(std::string("STATE"), vec3(1))},
         {19570 + 900 * 2, new TextEffect(std::string("OF"), vec3(1))},
         {19570 + 900 * 3, new TextEffect(std::string("LASER"), vec3(1))},
@@ -76,7 +76,7 @@ int main(int argc, char** argv)
 
         {33990, new InnerCircleEffect(vec3(0,0,1), vec3(1,0,0), 64.f, 1000, -8.0f)},
 
-        {43430 + 200 * 1, new TextEffect(std::string("AWESOME"), vec3(1), 0.5)},
+        {43430 + 200 * 1, new TextEffect(std::string("COOL"), vec3(1), 0.5)},
         {43430 + 200 * 2, new TextEffect(std::string("CODE"), vec3(1), 0.5)},
         {43430 + 200 * 3, new TextEffect(std::string("BY"), vec3(1), 0.5)},
         {43430 + 200 * 4, new TextEffect(std::string("MAJOR-X"), vec3(1), 0.5)},
@@ -84,11 +84,11 @@ int main(int argc, char** argv)
         {43430 + 200 * 6, new TextEffect(std::string("MUSIC"), vec3(1), 0.5)},
         {43430 + 200 * 7, new TextEffect(std::string("BY"), vec3(1), 0.5)},
         {43430 + 200 * 8, new TextEffect(std::string("TRAVOLTA"), vec3(1), 0.5)},
-        {43430 + 200 * 9, new TextEffect(std::string("BY"), vec3(1), 0.5)},
-        {43430 + 200 * 10, new TextEffect(std::string("HOLOSAPIENS"), vec3(1), 0.5)},
+        {43430 + 200 * 9, new TextEffect(std::string("HOLO"), vec3(1), 0.5)},
+        {43430 + 200 * 10, new TextEffect(std::string("SAPIENS"), vec3(1), 0.5)},
         {43430 + 200 * 11, new TextEffect(std::string("LOVES"), vec3(1), 0.5)},
         {43430 + 200 * 12, new TextEffect(std::string("SPACEBALLS"), vec3(1), 0.5)},
-        {43430 + 200 * 10, new TextEffect(std::string("SHERBROOKE"), vec3(1), 0.5)},
+        {43430 + 200 * 10, new TextEffect(std::string("MONTREAL"), vec3(1), 0.5)},
         {43430 + 200 * 11, new TextEffect(std::string("CANADA"), vec3(1), 0.5)},
         {43430 + 200 * 12, new TextEffect(std::string("LASER"), vec3(1), 0.5)},
         {43430 + 200 * 13, new TextEffect(std::string("CUBE"), vec3(1), 0.5)},
@@ -225,9 +225,9 @@ int main(int argc, char** argv)
             const std::vector<std::vector<vec2>>& frame = choreography->GetShapeFromTime(time);
             std::vector<std::vector<Vertex>> vertices = sequencer->Tick(time, frame);
 
-            lastPos = ConvertToSamples(vertices, samples, lastPos, drawStep, moveStep, vec3(0,0.5,0));
+            lastPos = ConvertToSamples(vertices, samples, lastPos, drawStep, moveStep, vec3(0, 0, 0));
 
-            laserCube.DrawSamples(samples, 2000);
+            laserCube.DrawSamples(samples, 1500);
         }
     }
     else

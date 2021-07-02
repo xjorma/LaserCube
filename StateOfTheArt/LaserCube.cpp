@@ -99,15 +99,14 @@ void LaserCube::Initialize()
 
 void LaserCube::DrawSamples(const std::vector<LaserSample>& samples, int maxBufferSize)
 {
-    if (m_buff_free < (m_buff_size - maxBufferSize))
-    {
-        std::this_thread::sleep_for(std::chrono::microseconds((1000000 * 100) / m_dac_rate));
-        m_buff_free += 10; // guesstimate
-    }
-
     int sentSample = 0;
     while (sentSample != samples.size())
     {
+        if (m_buff_free < (m_buff_size - maxBufferSize))
+        {
+            std::this_thread::sleep_for(std::chrono::microseconds(long long((1000000.0 * 100.0) / double(m_dac_rate))));
+            m_buff_free += 100; // guesstimate
+        }
         m_transfert_buff[0] = LASERCUBE_SAMPLE_DATA_ID;
         m_transfert_buff[1] = 0;
         m_transfert_buff[2] = m_message_num;
@@ -129,4 +128,5 @@ void LaserCube::DrawSamples(const std::vector<LaserSample>& samples, int maxBuff
     {
         m_frame_num++;
     }
+
 }

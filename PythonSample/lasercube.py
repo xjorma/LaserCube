@@ -202,15 +202,16 @@ threading.Thread(target=scanner, daemon=True).start()
 # This is just an example; makes a wavy rainbow circle.
 def gen_frame():
     frame = []
-    for i in range(256):
-        p = float(i) / 256
-        intensity = 16
+    nbpoints = 512
+    for i in range(nbpoints):
+        p = float(i) / nbpoints
+        intensity = 128
         frame.append(struct.pack('<HHHHH',
-            int(((math.sin(p * math.pi * 2)) * (0.8 + math.sin(p * 10 * math.pi * 2 + time.time()) * 0.1) * 0.7 / 2. + 0.5) * 0xfff),
-            int(((math.cos(p * math.pi * 2)) * (0.8 + math.sin(p * 10 * math.pi * 2 + time.time()) * 0.1) * 0.7 / 2. + 0.5) * 0xfff),
-            int(math.pow((math.sin((p + (time.time() * 1)) * (math.pi*4)) / 2. + 0.5), 1) * intensity),
-            int(math.pow((math.sin((p + (time.time() * 2)) * (math.pi*4)) / 2. + 0.5), 1) * intensity),
-            int(math.pow((math.sin((p + (time.time() * 3)) * (math.pi*4)) / 2. + 0.5), 1) * intensity)))
+            int(((math.sin(p * math.pi)) * 0.95 / 2. + 0.5) * 0xfff),
+            int(((math.cos(p * math.pi)) * 0.95 / 2. + 0.5) * 0xfff),
+            int(intensity),
+            int(0),
+            int((1 - p) * intensity)))
     return frame
 
 # Loop over incoming messages on cmd_sock and data_sock, and route them to the

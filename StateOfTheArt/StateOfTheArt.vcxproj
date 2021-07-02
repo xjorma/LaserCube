@@ -223,6 +223,7 @@
     <ClInclude Include="boolean.h" />
     <ClInclude Include="Effects.h" />
     <ClInclude Include="LaserCube.h" />
+    <ClInclude Include="LaserHelper.h" />
     <ClInclude Include="ShapeUtils.h" />
     <ClInclude Include="RemapTime.h" />
     <ClInclude Include="TimeProvider.h" />

@@ -1,18 +1,20 @@
 #include "pch.h"
 #include "effects.h"
+#include "LaserHelper.h"
 
 
-LaserdockSample convert(Vertex v)
+LaserSample ConvertToLaser(const Vertex &v)
 {
-	LaserdockSample sample;
-	sample.x = (uint16_t)clamp(v.pos.x, 0.0f, 4095.0f);
-	sample.y = (uint16_t)clamp(v.pos.y, 0.0f, 4095.0f);
-	sample.rg = (uint16_t)clamp(v.color.r, 0.0f, 4095.0f) | ((uint16_t)clamp(v.color.g, 0.0f, 4095.0f) << 8);
-	sample.b = (uint16_t)clamp(v.color.b, 0.0f, 4095.0f);
+	LaserSample sample;
+	sample.x = (uint16_t)clamp(4095.0f - v.pos.x, 0.0f, 4095.0f);
+	sample.y = (uint16_t)clamp(4095.0f - v.pos.y, 0.0f, 4095.0f);
+	sample.r = (uint16_t)clamp(v.color.r * 256, 0.0f, 4095.0f);
+	sample.g = (uint16_t)clamp(v.color.g * 256, 0.0f, 4095.0f);
+	sample.b = (uint16_t)clamp(v.color.b * 128, 0.0f, 4095.0f);
 	return sample;
 }
 
-inline std::vector<float> Measure(const std::vector<std::vector<Vertex>>& shapes, float& totalLen)
+std::vector<float> Measure(const std::vector<std::vector<Vertex>>& shapes, float& totalLen)
 {
 	totalLen = 0.0f;
 	std::vector<float> measure;
@@ -35,7 +37,7 @@ inline std::vector<float> Measure(const std::vector<std::vector<Vertex>>& shapes
 	return std::move(measure);
 }
 
-inline void Resample(const std::vector<Vertex>& shape, std::vector<Vertex>& samples, int nbSamples, float measure)
+void Resample(const std::vector<Vertex>& shape, std::vector<Vertex>& samples, int nbSamples, float measure)
 {
 	float inc = measure / (float)(nbSamples - 1);
 	float cursor = 0.f;

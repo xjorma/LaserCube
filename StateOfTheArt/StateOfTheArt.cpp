@@ -6,6 +6,7 @@
 #include "effects.h"
 #include "AudioCapture.h"
 #include "LaserCube.h"
+#include "LaserHelper.h"
 
 //VectorAnim *animTest;
 Choreography* choreography;
@@ -197,7 +198,7 @@ int main(int argc, char** argv)
 
      });
 
-     const bool isOnLaser = false;
+     const bool isOnLaser = true;
 
      bool osc = true;
      if (osc)
@@ -213,29 +214,50 @@ int main(int argc, char** argv)
     if(isOnLaser)
     {
         LaserCube laserCube;
+        std::vector<LaserSample> samples;
+        std::vector<Vertex> resampled;
         for (;;)
         {
-            std::vector<LaserSample> samples;
-            samples.reserve(256);
-            float time = 0.0f;
-            const float pi = 3.14159265359f;
-            int pointInShape = 256;
-            for (int i = 0; i < pointInShape; i++)
+            samples.clear();
+
+            double time = timeProvider->GetTime();
+            time = remapTime->Convert(time);
+            const std::vector<std::vector<vec2>>& frame = choreography->GetShapeFromTime(time);
+            std::vector<std::vector<Vertex>> vertices = sequencer->Tick(time, frame);
+
+            float totalLen;
+            std::vector<float> dists = Measure(vertices, totalLen);
+
+            bool first = true;
+            for(int i = 0; i < vertices.size(); i++)
             {
-                float p = float(i) / float(pointInShape);
-                float intensity = 256.0f;
-                LaserSample curSample;
-                curSample.x = int(((sin(p * pi * 2)) * 0.7 / 2. + 0.5) * 0xfff);
-                curSample.y = int(((cos(p * pi * 2)) * 0.7 / 2. + 0.5) * 0xfff);
-                //curSample.r = int(pow((sin((p + (time * 1)) * (pi * 4)) / 2. + 0.5), 1) * intensity);
-                //curSample.g = int(pow((sin((p + (time * 2)) * (pi * 4)) / 2. + 0.5), 1) * intensity);
-                //curSample.b = int(pow((sin((p + (time * 3)) * (pi * 4)) / 2. + 0.5), 1) * intensity);
-                curSample.r = (uint16_t)intensity;
-                curSample.g = (uint16_t)intensity;
-                curSample.b = (uint16_t)intensity / 2;
-                samples.push_back(curSample);
+                const std::vector<Vertex> &shape = vertices[i];
+                if (shape.size())
+                {
+                    // Set a pause at a the begining of a shape
+                    int pause = 3;
+                    if (first)
+                    {
+                        first = false;
+                        pause = 6;
+                    }
+                    Vertex pauseVertex = shape[0];
+                    pauseVertex.color = vec3(0);
+                    LaserSample pauseSample = ConvertToLaser(pauseVertex);
+                    for (int i = 0; i < pause; i++)
+                    {
+                        samples.push_back(pauseSample);
+                    }
+                    // Resample
+                    resampled.clear();
+                    Resample(shape, resampled, int(dists[i] / 25.0f), dists[i]);
+                    for (const Vertex& vert : resampled)
+                    {
+                        samples.push_back(ConvertToLaser(vert));
+                    }
+                }
             }
-            laserCube.DrawSamples(samples);
+            laserCube.DrawSamples(samples, 2000);
         }
     }
     else

@@ -8,9 +8,9 @@ LaserSample ConvertToLaser(const Vertex &v)
 	LaserSample sample;
 	sample.x = (uint16_t)clamp(4095.0f - v.pos.x, 0.0f, 4095.0f);
 	sample.y = (uint16_t)clamp(4095.0f - v.pos.y, 0.0f, 4095.0f);
-	sample.r = (uint16_t)clamp(v.color.r * 256, 0.0f, 4095.0f);
-	sample.g = (uint16_t)clamp(v.color.g * 256, 0.0f, 4095.0f);
-	sample.b = (uint16_t)clamp(v.color.b * 128, 0.0f, 4095.0f);
+	sample.r = (uint16_t)clamp(v.color.r * 128, 0.0f, 4095.0f);
+	sample.g = (uint16_t)clamp(v.color.g * 128, 0.0f, 4095.0f);
+	sample.b = (uint16_t)clamp(v.color.b * 64, 0.0f, 4095.0f);
 	return sample;
 }
 
@@ -67,24 +67,43 @@ void Resample(const std::vector<Vertex>& shape, std::vector<Vertex>& samples, in
 	}
 }
 
-inline void Resample(const std::vector<std::vector<Vertex>>& shapes, std::vector<Vertex>& samples, int nbSamples)
+
+vec2 ConvertToSamples(const std::vector<std::vector<Vertex>>& shapes, std::vector<LaserSample>& samples, vec2 lastPos, float drawStep, float moveStep, vec3 moveColor)
 {
+	samples.clear();
+	std::vector<Vertex> resampled;
 	float totalLen;
-	int remainder = nbSamples;
-	std::vector<float> measures = Measure(shapes, totalLen);
-	if (shapes.size())
+	std::vector<float> dists = Measure(shapes, totalLen);
+
+	bool first = true;
+	for (int i = 0; i < shapes.size(); i++)
 	{
-		for (int i = 0; i < shapes.size() - 1; i++)
+		const std::vector<Vertex>& shape = shapes[i];
+		if (shape.size())
 		{
-			int nbAllocated = int(round(float(nbSamples) * measures[i] / totalLen));
-			remainder -= nbAllocated;
-			Resample(shapes[i], samples, nbAllocated, measures[i]);
+			// Set a pause at a the begining of a shape
+			int pause = 3;
+			if (first)
+			{
+				first = false;
+				pause = 6;
+			}
+			Vertex pauseVertex = shape[0];
+			pauseVertex.color = vec3(0);
+			LaserSample pauseSample = ConvertToLaser(pauseVertex);
+			for (int i = 0; i < pause; i++)
+			{
+				samples.push_back(pauseSample);
+			}
+			// Resample
+			resampled.clear();
+			Resample(shape, resampled, int(dists[i] / 25.0f), dists[i]);
+			for (const Vertex& vert : resampled)
+			{
+				samples.push_back(ConvertToLaser(vert));
+			}
 		}
-		Resample(shapes.back(), samples, remainder, measures.back());
+		lastPos = shape.back().pos;
 	}
-}
-
-void ConvToLaserOS(const std::vector<std::vector<Vertex>>& shapes, std::vector<LaserdockSample> &samples, int nbSamples, float scale, float angle)
-{
-
+	return lastPos;
 }

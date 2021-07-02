@@ -215,48 +215,18 @@ int main(int argc, char** argv)
     {
         LaserCube laserCube;
         std::vector<LaserSample> samples;
-        std::vector<Vertex> resampled;
+        vec2 lastPos = vec2(0);
+        float drawStep = 25.0f;
+        float moveStep = 40.0f;
         for (;;)
         {
-            samples.clear();
-
             double time = timeProvider->GetTime();
             time = remapTime->Convert(time);
             const std::vector<std::vector<vec2>>& frame = choreography->GetShapeFromTime(time);
             std::vector<std::vector<Vertex>> vertices = sequencer->Tick(time, frame);
 
-            float totalLen;
-            std::vector<float> dists = Measure(vertices, totalLen);
+            lastPos = ConvertToSamples(vertices, samples, lastPos, drawStep, moveStep, vec3(0));
 
-            bool first = true;
-            for(int i = 0; i < vertices.size(); i++)
-            {
-                const std::vector<Vertex> &shape = vertices[i];
-                if (shape.size())
-                {
-                    // Set a pause at a the begining of a shape
-                    int pause = 3;
-                    if (first)
-                    {
-                        first = false;
-                        pause = 6;
-                    }
-                    Vertex pauseVertex = shape[0];
-                    pauseVertex.color = vec3(0);
-                    LaserSample pauseSample = ConvertToLaser(pauseVertex);
-                    for (int i = 0; i < pause; i++)
-                    {
-                        samples.push_back(pauseSample);
-                    }
-                    // Resample
-                    resampled.clear();
-                    Resample(shape, resampled, int(dists[i] / 25.0f), dists[i]);
-                    for (const Vertex& vert : resampled)
-                    {
-                        samples.push_back(ConvertToLaser(vert));
-                    }
-                }
-            }
             laserCube.DrawSamples(samples, 2000);
         }
     }

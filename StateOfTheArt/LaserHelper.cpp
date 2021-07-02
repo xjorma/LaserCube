@@ -61,7 +61,7 @@ void Resample(const std::vector<Vertex>& shape, std::vector<Vertex>& samples, in
 			curSpan++;
 			cursor -= curLineDist;
 		}
-		float alpha = cursor / curLineDist;
+		float alpha = curLineDist > 0.001f ? cursor / curLineDist : 0.0f;
 		samples.emplace_back(mix(v0, v1, alpha), mix(c0, c1, alpha));
 		cursor += inc;
 	}

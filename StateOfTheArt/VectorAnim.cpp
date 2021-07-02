@@ -60,9 +60,22 @@ std::vector<vec2> Tween(int tween_from, int tween_to, int tween_t, int tween_cou
         vec2 v_from = vec2(mix((float)data[idx_from0 + 1], (float)data[idx_from1 + 1], alpha_from), mix((float)data[idx_from0], (float)data[idx_from1], alpha_from));
         vec2 v_to = vec2(mix((float)data[idx_to0 + 1], (float)data[idx_to1 + 1], alpha_from), mix((float)data[idx_to0], (float)data[idx_to1], alpha_from));
         vec2 v = mix(v_from, v_to, amt);
+
+        if (v.x != v.x || v.y != v.y)
+        {
+            __debugbreak();
+        }
+
         newShape.push_back(ConvertToLaserOSRange(v));
     }
-    newShape.push_back(newShape[0]);
+    if (distance(newShape[0], newShape.back()) > 0.001f)
+    {
+        newShape.push_back(newShape[0]);
+    }
+    else
+    {
+        //__debugbreak();
+    }
     return std::move(newShape);
 }
 

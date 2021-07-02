@@ -17,6 +17,8 @@ AudioCapture *audioCapture;
 
 TimeProvider *timeProvider;
 
+vec2 glutLastPos = vec2(0);
+
 void reshape(int w, int h)
 {
     glViewport(0, 0, w, h);       /* Establish viewing area to cover entire window. */
@@ -38,18 +40,40 @@ void display(void)
 
     std::vector<std::vector<Vertex>> vertices = sequencer->Tick(time, frame);
 
-    for (const std::vector<Vertex>& shape : vertices)
+    std::vector<LaserSample> samples;
+    float drawStep = 25.0f;
+    float moveStep = 30.0f;
+    glutLastPos = ConvertToSamples(vertices, samples, glutLastPos, drawStep, moveStep, vec3(0.5, 0.5, 0));
+
+    const bool emulLaser = true;
+
+    if (emulLaser)
     {
-        if (shape.size() <= 1)
-            continue;
-        for (int i = 0; i < (int)shape.size() - 1; i++)
+        for (int i = 0; i < (int)samples.size() - 1; i++)
         {
-            glColor3f(shape[i].color.r, shape[i].color.g, shape[i].color.b);
-            glVertex2f(shape[i].pos.x, shape[i].pos.y);
-            glColor3f(shape[i + 1].color.r, shape[i + 1].color.g, shape[i + 1].color.b);
-            glVertex2f(shape[i + 1].pos.x, shape[i + 1].pos.y);
+            const float colMax = 128.0f;
+            glColor3f(samples[i].r / colMax, samples[i].g / colMax, samples[i].b * 2.0f / colMax);
+            glVertex2f(4095.0f - samples[i].x, 4095.0f - samples[i].y);
+            glColor3f(samples[i + 1].r / colMax, samples[i + 1].g / colMax, samples[i + 1].b * 2.0f / colMax);
+            glVertex2f(4095.0f - samples[i + 1].x, 4095.0f - samples[i + 1].y);
         }
     }
+    else
+    {
+        for (const std::vector<Vertex>& shape : vertices)
+        {
+            if (shape.size() <= 1)
+                continue;
+            for (int i = 0; i < (int)shape.size() - 1; i++)
+            {
+                glColor3f(shape[i].color.r, shape[i].color.g, shape[i].color.b);
+                glVertex2f(shape[i].pos.x, shape[i].pos.y);
+                glColor3f(shape[i + 1].color.r, shape[i + 1].color.g, shape[i + 1].color.b);
+                glVertex2f(shape[i + 1].pos.x, shape[i + 1].pos.y);
+            }
+        }
+    }
+
     glEnd();
     glutSwapBuffers();
     glutPostRedisplay();
@@ -156,7 +180,7 @@ int main(int argc, char** argv)
 
 
         {91510, new GhostEffect(vec3(0,1,0), vec3(0,0.3,0.7f), 3)},                         // Jump
-        {105550, new DisturbEffect(500.0f, vec3(0.5,1,0.5), 150, audioCapture)},            // Glichy
+        {105550, new DisturbEffect(2000.0f, vec3(0.5,1,0.5), 100, audioCapture)},           // Glichy
         {138070, new PlasmaEffect(1000)},                                                   // Tubuloc
         {154750, new GhostEffect(vec3(0,1,0), vec3(0.2f,0.2f,0.5f), 3)},
         {175590, new PlasmaEffect(1000)},                                                   // outline
@@ -198,7 +222,7 @@ int main(int argc, char** argv)
 
      });
 
-     const bool isOnLaser = false;
+     const bool isOnLaser = true;
      const bool osc = true;
 
      if (osc)
@@ -216,7 +240,7 @@ int main(int argc, char** argv)
         LaserCube laserCube;
         std::vector<LaserSample> samples;
         vec2 lastPos = vec2(0);
-        float drawStep = 25.0f;
+        float drawStep = 50.0f;
         float moveStep = 30.0f;
         for (;;)
         {
@@ -225,7 +249,7 @@ int main(int argc, char** argv)
             const std::vector<std::vector<vec2>>& frame = choreography->GetShapeFromTime(time);
             std::vector<std::vector<Vertex>> vertices = sequencer->Tick(time, frame);
 
-            lastPos = ConvertToSamples(vertices, samples, lastPos, drawStep, moveStep, vec3(0, 1, 0));
+            lastPos = ConvertToSamples(vertices, samples, lastPos, drawStep, moveStep, vec3(0, 0, 0));
 
             laserCube.DrawSamples(samples, 1500);
         }

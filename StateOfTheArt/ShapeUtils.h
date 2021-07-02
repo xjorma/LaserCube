@@ -46,7 +46,8 @@ inline std::vector<vec2> Resample(const std::vector<vec2>& shape, int nbPoints, 
 			curSpan++;
 			cursor -= curLineDist;
 		}
-		ret.push_back(mix(v0, v1, cursor / curLineDist));
+		float alpha = curLineDist > 0.001f ? cursor / curLineDist : 0.0f;
+		ret.push_back(mix(v0, v1, alpha));
 		cursor += inc;
 	}
 	return std::move(ret);

@@ -1,5 +1,5 @@
 # State Of Laser Beam
-My little tribute to "State of The Art" by Spaceballs, and I believe this is the first demo using a laser display. I also provide a small little c++ example on how to draw with a laser cube without any dependency (Just communicating with osc packet)
+My little tribute to "State of The Art" by Spaceballs, and I believe this is the first demo using a laser display. I also provide a small little c++ example on how to draw with a laser cube (www.laseros.com) without any dependency (Just communicating with osc packet)
 
 https://youtu.be/hZYU6tMDR48
 

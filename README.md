@@ -3,7 +3,7 @@ My little tribute to "State of The Art" by Spaceballs, and I believe this is the
 
 https://youtu.be/hZYU6tMDR48
 
-![Demo ScreenShot](/Doc/Pictures/ScreenShot.jpg
+![Demo ScreenShot](/Doc/Pictures/screenshot.jpg)
 
 Unfortunately the code was writen under tigth deadline. Code quality might be affected (This is an 
 euphemism :) )
